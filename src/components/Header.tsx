@@ -23,7 +23,7 @@ const NAV: NavItem[] = [
     href: '#projects',
     dropdown: [
       { label: 'Căn hộ hiện đại',     href: '#projects' },
-      { label: 'Biệt thự Indochine',  href: '#projects' },
+      { label: 'Chung cư Indochine',   href: '#projects' },
       { label: 'Văn phòng tối giản',  href: '#projects' },
       { label: 'Xem tất cả →',        href: '#projects' },
     ],
@@ -39,7 +39,8 @@ export default function Header() {
   const [navOpen,     setNavOpen]     = useState(false);
   const [openDrop,    setOpenDrop]    = useState<string | null>(null);
   const [topBarHide,  setTopBarHide]  = useState(false);
-  const lastScrollY = useRef(0);
+  const lastScrollY  = useRef(0);
+  const closeTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -72,6 +73,15 @@ export default function Header() {
 
   const toggleDrop = (label: string) =>
     setOpenDrop(prev => (prev === label ? null : label));
+
+  const openDropDelayed = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenDrop(label);
+  };
+
+  const closeDropDelayed = () => {
+    closeTimer.current = setTimeout(() => setOpenDrop(null), 180);
+  };
 
   return (
     <header className={`site-header${scrolled ? ' scrolled' : ''}`} id="site-header">
@@ -115,8 +125,8 @@ export default function Header() {
                 <li
                   key={item.label}
                   className={item.dropdown ? 'has-dropdown' : ''}
-                  onMouseEnter={() => item.dropdown && setOpenDrop(item.label)}
-                  onMouseLeave={() => item.dropdown && setOpenDrop(null)}
+                  onMouseEnter={() => item.dropdown && openDropDelayed(item.label)}
+                  onMouseLeave={() => item.dropdown && closeDropDelayed()}
                 >
                   <a
                     href={item.href}
@@ -133,7 +143,12 @@ export default function Header() {
                   </a>
 
                   {item.dropdown && (
-                    <ul className={`dropdown${openDrop === item.label ? ' open' : ''}`} role="menu">
+                    <ul
+                      className={`dropdown${openDrop === item.label ? ' open' : ''}`}
+                      role="menu"
+                      onMouseEnter={() => closeTimer.current && clearTimeout(closeTimer.current)}
+                      onMouseLeave={closeDropDelayed}
+                    >
                       {item.dropdown.map(d => (
                         <li key={d.label} role="none">
                           <a href={d.href} role="menuitem" onClick={closeAll}>{d.label}</a>

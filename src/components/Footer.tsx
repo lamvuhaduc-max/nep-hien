@@ -20,6 +20,8 @@ export default function Footer() {
 
         <p className="footer-copy">
           © {year} Nếp Hiên &nbsp;·&nbsp; 14 Đường 41, An Khánh, TP.HCM
+          &nbsp;·&nbsp;
+          <a href="https://nephien.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>nephien.com</a>
         </p>
       </div>
     </footer>

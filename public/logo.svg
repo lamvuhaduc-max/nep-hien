@@ -1,17 +1,39 @@
-<svg width="680" height="200" viewBox="0 0 680 200" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, 'Times New Roman', serif">
-  <title>Logo chính Nếp Hiên</title>
-  <desc>Biểu tượng mái hiên cách điệu bên trái, chữ NẾP HIÊN và dòng phụ Nội thất · Furniture &amp; Interiors bên phải, nền kem.</desc>
-  <rect width="680" height="200" fill="#F3ECDF"/>
-  <g transform="translate(48,31) scale(0.85)">
-    <g transform="translate(0,8) scale(1.15)">
-      <line x1="26" y1="118" x2="94" y2="118" stroke="#23211C" stroke-width="7" stroke-linecap="round"/>
-      <path d="M32 118 L32 64 Q32 36 60 36 Q88 36 88 64 L88 118" fill="none" stroke="#23211C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M12 28 Q60 8 108 28" fill="none" stroke="#C0562C" stroke-width="6.5" stroke-linecap="round"/>
-      <path d="M12 28 Q7 23 9 15" fill="none" stroke="#C0562C" stroke-width="6.5" stroke-linecap="round"/>
-      <path d="M108 28 Q113 23 111 15" fill="none" stroke="#C0562C" stroke-width="6.5" stroke-linecap="round"/>
-      <circle cx="60" cy="9" r="3.2" fill="#C0562C"/>
-    </g>
-    <text x="195" y="108" font-size="76" letter-spacing="7" fill="#23211C">NẾP HIÊN</text>
-    <text x="198" y="142" font-size="15.5" letter-spacing="8" fill="#9A7B4F">NỘI THẤT · FURNITURE &amp; INTERIORS</text>
-  </g>
+<svg width="560" height="160" viewBox="0 0 560 160" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Logo Nếp Hiên – Furniture &amp; Interior</title>
+
+  <!-- ── ARCH ICON ── -->
+  <!-- Base -->
+  <line x1="16" y1="138" x2="100" y2="138" stroke="#1F2020" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Left pillar -->
+  <line x1="26" y1="138" x2="26" y2="88" stroke="#1F2020" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Right pillar -->
+  <line x1="90" y1="138" x2="90" y2="88" stroke="#1F2020" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Arch -->
+  <path d="M26 88 Q26 46 58 46 Q90 46 90 88" fill="none" stroke="#1F2020" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Roof element (terracotta) -->
+  <path d="M8 38 Q58 18 108 38" fill="none" stroke="#C0562C" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Left upturn -->
+  <path d="M8 38 Q3 31 6 22" fill="none" stroke="#C0562C" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Right upturn -->
+  <path d="M108 38 Q113 31 110 22" fill="none" stroke="#C0562C" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Dot -->
+  <circle cx="58" cy="12" r="4" fill="#C0562C"/>
+
+  <!-- ── TEXT ── -->
+  <!-- NEP HIEN -->
+  <text x="138" y="105"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="64"
+    letter-spacing="4"
+    fill="#1F2020"
+    font-weight="normal">NEP HIEN</text>
+
+  <!-- FURNITURE &amp; INTERIOR -->
+  <text x="141" y="136"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14"
+    letter-spacing="7"
+    fill="#C0562C"
+    font-weight="normal">FURNITURE &amp; INTERIOR</text>
 </svg>

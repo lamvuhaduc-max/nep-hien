@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import Stats from '@/components/Stats';
 import Services from '@/components/Services';
 import Projects from '@/components/Projects';
+import Partners from '@/components/Partners';
 import ContactForm from '@/components/ContactForm';
 import About from '@/components/About';
 import Footer from '@/components/Footer';
@@ -19,6 +20,7 @@ export default function Home() {
         <Stats />
         <Services />
         <Projects />
+        <Partners />
         <ContactForm />
         <About />
       </main>

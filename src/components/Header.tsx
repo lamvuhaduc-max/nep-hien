@@ -94,7 +94,7 @@ export default function Header() {
           </span>
           <div className="top-contacts">
             <a href="tel:+84901234567" aria-label="Gọi điện">☎ 0901 234 567</a>
-            <a href="mailto:hello@nephien.vn" aria-label="Gửi email">✉ Email</a>
+            <a href="mailto:dvkh247@nephien.com" aria-label="Gửi email">✉ dvkh247@nephien.com</a>
             <a href="#" aria-label="Zalo">Zalo</a>
             <a href="#" aria-label="Facebook">Facebook</a>
             <a href="#" aria-label="Instagram">Instagram</a>

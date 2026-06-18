@@ -28,7 +28,11 @@ export default function About() {
             </div>
             <div className="contact-item">
               <span className="contact-label">Email</span>
-              <a href="mailto:hello@nephien.vn">hello@nephien.vn</a>
+              <a href="mailto:dvkh247@nephien.com">dvkh247@nephien.com</a>
+            </div>
+            <div className="contact-item">
+              <span className="contact-label">Website</span>
+              <a href="https://nephien.com" target="_blank" rel="noopener noreferrer">nephien.com</a>
             </div>
             <div className="contact-item">
               <span className="contact-label">Giờ làm việc</span>

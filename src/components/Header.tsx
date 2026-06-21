@@ -109,10 +109,10 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="logo-wrap" aria-label="Nếp Hiên – Trang chủ" onClick={closeAll}>
             <Image
-              src="/logo.svg"
+              src={scrolled ? '/logo.svg' : '/logo-light.svg'}
               alt="Nếp Hiên"
-              width={130}
-              height={38}
+              width={150}
+              height={44}
               className="logo-img"
               priority
             />

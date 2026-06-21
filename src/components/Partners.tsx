@@ -1,20 +1,19 @@
 'use client';
 
 const PARTNERS = [
-  { name: 'An Cường',  cat: 'Gỗ công nghiệp'      },
-  { name: 'KES',       cat: 'Vật liệu gỗ'          },
-  { name: 'Häfele',    cat: 'Phụ kiện nội thất'    },
-  { name: 'Blum',      cat: 'Bản lề & ray trượt'   },
-  { name: 'Hettich',   cat: 'Phụ kiện Đức'         },
-  { name: 'TOTO',      cat: 'Thiết bị phòng tắm'   },
-  { name: 'Kohler',    cat: 'Thiết bị cao cấp'      },
-  { name: 'Dulux',     cat: 'Sơn cao cấp'           },
-  { name: 'Nippon',    cat: 'Sơn nội thất'          },
-  { name: 'Grass',     cat: 'Hệ trượt Áo'           },
+  { name: 'An Cường',  cat: 'Gỗ công nghiệp',       color: '#C8973A' },
+  { name: 'KES',       cat: 'Vật liệu gỗ',            color: '#E8E8E8' },
+  { name: 'Häfele',   cat: 'Phụ kiện nội thất',      color: '#E8001C' },
+  { name: 'Blum',     cat: 'Bản lề & ray trượt',     color: '#009FDF' },
+  { name: 'Hettich',  cat: 'Phụ kiện Đức',           color: '#003B8E' },
+  { name: 'TOTO',     cat: 'Thiết bị phòng tắm',     color: '#E8E8E8' },
+  { name: 'Kohler',   cat: 'Thiết bị cao cấp',        color: '#C9A84C' },
+  { name: 'Dulux',    cat: 'Sơn cao cấp',             color: '#E60026' },
+  { name: 'Nippon',   cat: 'Sơn nội thất',            color: '#E8E8E8' },
+  { name: 'Grass',    cat: 'Hệ trượt Áo',             color: '#5B8C00' },
 ];
 
 export default function Partners() {
-  // Duplicate for seamless loop
   const list = [...PARTNERS, ...PARTNERS];
 
   return (
@@ -29,8 +28,9 @@ export default function Partners() {
         <div className="partners-track">
           {list.map((p, i) => (
             <div key={i} className="partner-chip">
-              <span className="partner-dot" />
-              <span className="partner-chip-name">{p.name}</span>
+              <span className="partner-chip-name" style={{ color: p.color }}>
+                {p.name}
+              </span>
               <span className="partner-chip-cat">{p.cat}</span>
             </div>
           ))}

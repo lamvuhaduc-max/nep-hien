@@ -1113,7 +1113,7 @@ address { font-style: normal; }
 .styles-grid { display: flex; flex-direction: column; gap: 80px; margin-top: 56px; }
 .style-card { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .style-card.reverse .style-img { order: 2; }
-.style-img { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 2px; }
+.style-img { position: relative; min-height: 420px; overflow: hidden; border-radius: 2px; }
 .style-name { font-family: var(--serif); font-size: clamp(26px,3vw,36px); color: var(--text); margin: 12px 0 16px; }
 .style-desc { font-size: 15px; line-height: 1.85; color: var(--muted); }
 .style-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }

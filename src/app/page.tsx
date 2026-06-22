@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import Cursor from '@/components/Cursor';
 import Stats from '@/components/Stats';
 import Services from '@/components/Services';
 import Projects from '@/components/Projects';
@@ -16,6 +17,7 @@ const ScrollReveal = dynamic(() => import('@/components/ScrollReveal'), { ssr: f
 export default function Home() {
   return (
     <>
+      <Cursor />
       <Header />
       <main>
         <Hero />

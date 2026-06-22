@@ -32,17 +32,19 @@ export default function Hero() {
 
       {/* 4 — Nội dung */}
       <div className="wrap hero-content">
-        <p className="kicker">Nội thất cao cấp · TP. Hồ Chí Minh</p>
+        <p className="kicker hero-anim" style={{ animationDelay: '0.1s' }}>
+          Nội thất cao cấp · TP. Hồ Chí Minh
+        </p>
         <h1 className="heading-xl" style={{ marginTop: 20 }}>
-          Không gian sống<br />
-          <em>phản chiếu</em><br />
-          con người bạn
+          <span className="hero-line hero-anim" style={{ animationDelay: '0.3s' }}>Không gian sống</span><br />
+          <em className="hero-line hero-anim" style={{ animationDelay: '0.5s' }}>phản chiếu</em><br />
+          <span className="hero-line hero-anim" style={{ animationDelay: '0.7s' }}>con người bạn</span>
         </h1>
-        <p className="hero-desc">
+        <p className="hero-desc hero-anim" style={{ animationDelay: '0.9s' }}>
           Nếp Hiên kiến tạo những không gian vừa đẹp vừa sống — nơi thẩm mỹ
           và công năng hoà quyện, nơi mỗi góc nhỏ đều kể một câu chuyện.
         </p>
-        <div className="hero-ctas">
+        <div className="hero-ctas hero-anim" style={{ animationDelay: '1.1s' }}>
           <a href="#contact-form" className="btn btn-gold">Bắt đầu dự án →</a>
           <a href="#projects"     className="btn btn-ghost">Xem công trình</a>
         </div>

@@ -721,6 +721,60 @@ address { font-style: normal; }
 [hidden] { display: none !important; }
 
 /* =========================================
+   CUSTOM CURSOR
+   ========================================= */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  border-radius: 50%;
+  transition: opacity .3s;
+}
+
+.cursor-dot {
+  width: 8px; height: 8px;
+  background: var(--terra);
+  margin-top: 0; margin-left: 0;
+}
+
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1.5px solid rgba(192,86,44,.5);
+  transition: transform .05s linear, width .3s, height .3s, border-color .3s;
+}
+
+.cursor-ring.cursor-grow {
+  width: 64px; height: 64px;
+  border-color: var(--brass-lt);
+  margin-top: -12px; margin-left: -12px;
+}
+
+/* Hide default cursor when custom cursor active */
+.has-cursor,
+.has-cursor * { cursor: none !important; }
+
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* =========================================
+   HERO ANIMATION
+   ========================================= */
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-anim {
+  opacity: 0;
+  animation: heroReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-line { display: inline-block; }
+
+/* =========================================
    PROCESS SECTION
    ========================================= */
 .process-section { padding: var(--section-py) 0; background: var(--bg-alt); }

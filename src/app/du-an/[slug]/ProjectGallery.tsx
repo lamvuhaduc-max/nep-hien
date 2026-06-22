@@ -46,6 +46,7 @@ export default function ProjectGallery({ project }: { project: Project }) {
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   style={{ objectFit: 'cover' }}
+                  quality={65}
                   loading={idx < 4 ? 'eager' : 'lazy'}
                 />
                 <span className="gallery-zoom" aria-hidden="true">+</span>

@@ -1,18 +1,16 @@
 'use client';
 
-import Image from 'next/image';
-
 const PARTNERS = [
-  { name: 'An Cường',  logo: '/partners/ancuong.svg',      w: 200, color: true  },
-  { name: 'KES',       logo: '/partners/kes.svg',           w: 100, color: false },
-  { name: 'Häfele',   logo: '/partners/hafele.svg',        w: 140, color: false },
-  { name: 'Blum',     logo: '/partners/blum.svg',           w: 120, color: false },
-  { name: 'Hettich',  logo: '/partners/hettich.svg',       w: 150, color: true  },
-  { name: 'TOTO',     logo: '/partners/toto-real.svg',     w: 120, color: false },
-  { name: 'Kohler',   logo: '/partners/kohler.svg',        w: 150, color: false },
-  { name: 'Dulux',    logo: '/partners/dulux.svg',         w: 130, color: false },
-  { name: 'Nippon',   logo: '/partners/nippon.svg',        w: 160, color: false },
-  { name: 'Grass',    logo: '/partners/grass.svg',         w: 130, color: false },
+  { name: 'AN CƯỜNG',  sub: 'Gỗ công nghiệp',       color: '#4A9FD4' },
+  { name: 'KES',       sub: 'Vật liệu gỗ',            color: '#E8E8E8' },
+  { name: 'HÄFELE',   sub: 'Phụ kiện nội thất',      color: '#E8E8E8' },
+  { name: 'BLUM',     sub: 'Bản lề & ray trượt',     color: '#E8E8E8' },
+  { name: 'HETTICH',  sub: 'Phụ kiện Đức',           color: '#E8E8E8' },
+  { name: 'TOTO',     sub: 'Thiết bị phòng tắm',     color: '#E8E8E8' },
+  { name: 'KOHLER',   sub: 'Thiết bị cao cấp',        color: '#C9A84C' },
+  { name: 'DULUX',    sub: 'Sơn cao cấp',             color: '#E8E8E8' },
+  { name: 'NIPPON',   sub: 'Sơn nội thất',            color: '#E8E8E8' },
+  { name: 'GRASS',    sub: 'Hệ trượt Áo',             color: '#E8E8E8' },
 ];
 
 export default function Partners() {
@@ -30,20 +28,12 @@ export default function Partners() {
         <div className="partners-track">
           {list.map((p, i) => (
             <div key={i} className="partner-logo-wrap">
-              <Image
-                src={p.logo}
-                alt={p.name}
-                width={p.w}
-                height={56}
-                style={{
-                  height: '40px',
-                  width: 'auto',
-                  objectFit: 'contain',
-                  // color logos: hiển thị màu gốc
-                  // white-on-transparent logos: invert để thành cream
-                  filter: p.color ? 'none' : 'brightness(0) invert(1)',
-                }}
-              />
+              <div className="partner-text-logo">
+                <span className="partner-text-name" style={{ color: p.color }}>
+                  {p.name}
+                </span>
+                <span className="partner-text-sub">{p.sub}</span>
+              </div>
             </div>
           ))}
         </div>

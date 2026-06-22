@@ -1442,13 +1442,32 @@ address { font-style: normal; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 48px;
+  padding: 8px 40px;
   border-right: 1px solid rgba(201,169,110,.12);
   opacity: .65;
   transition: opacity .3s;
   flex-shrink: 0;
 }
 .partner-logo-wrap:hover { opacity: 1; }
+
+.partner-text-logo {
+  display: flex; flex-direction: column; gap: 3px; align-items: center;
+}
+.partner-text-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.partner-text-sub {
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(201,169,110,.5);
+  white-space: nowrap;
+}
 
 
 /* =========================================

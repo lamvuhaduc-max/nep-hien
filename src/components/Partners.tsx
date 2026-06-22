@@ -6,7 +6,7 @@ const PARTNERS = [
   { name: 'An Cường',  logo: '/partners/ancuong.svg',      w: 200, color: true  },
   { name: 'KES',       logo: '/partners/kes.svg',           w: 100, color: false },
   { name: 'Häfele',   logo: '/partners/hafele.svg',        w: 140, color: false },
-  { name: 'Blum',     logo: '/partners/blum-real.svg',     w: 120, color: false },
+  { name: 'Blum',     logo: '/partners/blum.svg',           w: 120, color: false },
   { name: 'Hettich',  logo: '/partners/hettich.svg',       w: 150, color: true  },
   { name: 'TOTO',     logo: '/partners/toto-real.svg',     w: 120, color: false },
   { name: 'Kohler',   logo: '/partners/kohler.svg',        w: 150, color: false },

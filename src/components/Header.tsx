@@ -39,7 +39,7 @@ const NAV_RIGHT: NavItem[] = [
 
 const ALL_NAV = [...NAV_LEFT, ...NAV_RIGHT];
 
-export default function Header() {
+export default function Header({ isDark = false }: { isDark?: boolean }) {
   const [scrolled,   setScrolled]   = useState(false);
   const [navOpen,    setNavOpen]    = useState(false);
   const [openDrop,   setOpenDrop]   = useState<string | null>(null);
@@ -123,7 +123,7 @@ export default function Header() {
     ));
 
   return (
-    <header className={`site-header${scrolled ? ' scrolled' : ''}`} id="site-header">
+    <header className={`site-header${(scrolled || !isDark) ? ' scrolled' : ''}`} id="site-header">
 
       {/* ── TOP BAR ── */}
       <div className={`top-bar${topBarHide ? ' top-bar--hide' : ''}`}>
@@ -153,7 +153,7 @@ export default function Header() {
           {/* Center Logo */}
           <Link href="/" className="logo-wrap logo-center" aria-label="Nếp Hiên – Trang chủ" onClick={closeAll}>
             <Image
-              src={scrolled ? '/logo.svg' : '/logo-light.svg'}
+              src={(scrolled || !isDark) ? '/logo.svg' : '/logo-light.svg'}
               alt="Nếp Hiên"
               width={180}
               height={52}

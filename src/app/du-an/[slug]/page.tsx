@@ -27,7 +27,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
   return (
     <>
-      <Header />
+      <Header isDark={false} />
       <main className="proj-detail">
 
       {/* Hero */}

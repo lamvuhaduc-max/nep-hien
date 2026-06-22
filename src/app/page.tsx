@@ -16,7 +16,7 @@ const ScrollReveal = dynamic(() => import('@/components/ScrollReveal'), { ssr: f
 export default function Home() {
   return (
     <>
-      <Header />
+      <Header isDark={true} />
       <main>
         <Hero />
         <Stats />

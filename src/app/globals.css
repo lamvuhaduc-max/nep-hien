@@ -945,6 +945,30 @@ address { font-style: normal; }
   width: 100%;
 }
 
+/* ── GIỚI THIỆU PHOTO GALLERY ── */
+.gt-gallery-section { padding: var(--section-py) 0; background: var(--bg-alt); }
+.gt-gallery-header { max-width: var(--max-w); margin: 0 auto 48px; padding: 0 48px; }
+.gt-gallery-grid {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 12px;
+}
+.gt-gallery-item { position: relative; overflow: hidden; border-radius: 2px; }
+.gt-gallery-item img { transition: transform .6s var(--ease); }
+.gt-gallery-item:hover img { transform: scale(1.05); }
+.gt-tall { grid-row: span 2; }
+.gt-wide { grid-column: span 2; }
+
+@media (max-width: 768px) {
+  .gt-gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gt-tall, .gt-wide { grid-row: auto; grid-column: auto; }
+  .gt-gallery-item { aspect-ratio: 4/3; }
+  .gt-gallery-header { padding: 0 24px; }
+  .gt-gallery-grid { padding: 0 24px; }
+}
+
 /* Responsive */
 @media (max-width: 960px) {
   .cat-intro-inner { grid-template-columns: 1fr; gap: 48px; }

@@ -43,7 +43,7 @@ const STYLES = [
 export default function PhongCachPage() {
   return (
     <>
-      <Header />
+      <Header isDark={false} />
       <main>
         {/* Hero */}
         <section className="page-hero">

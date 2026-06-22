@@ -66,7 +66,7 @@ const FAQS = [
 export default function BaoGiaPage() {
   return (
     <>
-      <Header />
+      <Header isDark={false} />
       <main>
         {/* Hero */}
         <section className="baogia-hero">

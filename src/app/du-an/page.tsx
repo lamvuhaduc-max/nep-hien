@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function DuAnPage() {
   return (
     <>
-      <Header />
+      <Header isDark={false} />
       <main>
         {/* Hero */}
         <section className="page-hero">

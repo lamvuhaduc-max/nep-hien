@@ -4,6 +4,15 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import type { Metadata } from 'next';
 
+const GALLERY = [
+  { src: '/images/p1/z7935782332341_4939d3f8181de417e6ebd0baa6016085.jpg', alt: 'Phòng ngủ hiện đại', span: 'tall' },
+  { src: '/images/p2/z7896373239436_a6453c1ea75694dd3551590316c11802.jpg', alt: 'Phòng khách sang trọng', span: '' },
+  { src: '/images/p3/z7896845533158_7fae4a5fa5bb45a0de03b4a65c192eab.jpg', alt: 'Văn phòng Wabi-Sabi', span: '' },
+  { src: '/images/p1/z7935782332366_cf902726476f4ffa358c5e5875e8631d.jpg', alt: 'Không gian bếp', span: 'wide' },
+  { src: '/images/p2/z7896373267515_ff8395c4446f1ad973986fd11b752a18.jpg', alt: 'Sảnh đón Indochine', span: '' },
+  { src: '/images/p3/z7896845415116_9ff5dc2a63b2833e46db7a1720c7f52b.jpg', alt: 'Góc làm việc', span: '' },
+];
+
 export const metadata: Metadata = {
   title: 'Giới Thiệu — Nếp Hiên Nội Thất',
   description: 'Hơn 8 năm kiến tạo không gian sống tại TP.HCM. Đội ngũ thiết kế tận tâm, minh bạch từ tư vấn đến bàn giao.',
@@ -12,7 +21,7 @@ export const metadata: Metadata = {
 export default function GioiThieuPage() {
   return (
     <>
-      <Header />
+      <Header isDark={false} />
       <main className="catalogue-page">
 
         {/* ── SECTION 1: INTRODUCTION ── */}
@@ -123,6 +132,22 @@ export default function GioiThieuPage() {
                 fill style={{ objectFit: 'cover' }}
               />
             </div>
+          </div>
+        </section>
+
+        {/* ── PHOTO GALLERY ── */}
+        <section className="gt-gallery-section">
+          <div className="gt-gallery-header">
+            <p className="kicker">Công trình thực tế</p>
+            <h2 className="heading-lg" style={{ marginTop: 8 }}>Không gian <em>đã hoàn thiện</em></h2>
+          </div>
+          <div className="gt-gallery-grid">
+            {GALLERY.map((img) => (
+              <div key={img.src} className={`gt-gallery-item${img.span ? ` gt-${img.span}` : ''}`}>
+                <Image src={img.src} alt={img.alt} fill
+                  style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 50vw" />
+              </div>
+            ))}
           </div>
         </section>
 

@@ -1,0 +1,7 @@
+<svg width="130" height="56" viewBox="0 0 130 56" xmlns="http://www.w3.org/2000/svg">
+  <!-- G arc icon -->
+  <path d="M32 18 Q20 10 12 20 Q4 30 12 40 Q20 50 32 42 L32 32 L22 32" fill="none" stroke="#F5EFE0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Text -->
+  <text x="44" y="33" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="#F5EFE0" letter-spacing="3">GRASS</text>
+  <text x="44" y="47" font-family="Arial, sans-serif" font-size="8" fill="#C9A96E" letter-spacing="2">AUSTRIA</text>
+</svg>

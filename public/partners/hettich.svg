@@ -1,0 +1,8 @@
+<svg width="150" height="56" viewBox="0 0 150 56" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hettich square mark -->
+  <rect x="8" y="12" width="28" height="28" rx="2" fill="#F5EFE0"/>
+  <text x="11" y="33" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#221610">h</text>
+  <!-- Text -->
+  <text x="46" y="30" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#F5EFE0" letter-spacing="1">hettich</text>
+  <text x="46" y="45" font-family="Arial, sans-serif" font-size="8" fill="#C9A96E" letter-spacing="1.5">GERMANY · SINCE 1888</text>
+</svg>

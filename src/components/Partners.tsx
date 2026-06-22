@@ -1,16 +1,18 @@
 'use client';
 
+import Image from 'next/image';
+
 const PARTNERS = [
-  { name: 'An Cường',  cat: 'Gỗ công nghiệp',       color: '#C8973A' },
-  { name: 'KES',       cat: 'Vật liệu gỗ',            color: '#E8E8E8' },
-  { name: 'Häfele',   cat: 'Phụ kiện nội thất',      color: '#E8001C' },
-  { name: 'Blum',     cat: 'Bản lề & ray trượt',     color: '#009FDF' },
-  { name: 'Hettich',  cat: 'Phụ kiện Đức',           color: '#003B8E' },
-  { name: 'TOTO',     cat: 'Thiết bị phòng tắm',     color: '#E8E8E8' },
-  { name: 'Kohler',   cat: 'Thiết bị cao cấp',        color: '#C9A84C' },
-  { name: 'Dulux',    cat: 'Sơn cao cấp',             color: '#E60026' },
-  { name: 'Nippon',   cat: 'Sơn nội thất',            color: '#E8E8E8' },
-  { name: 'Grass',    cat: 'Hệ trượt Áo',             color: '#5B8C00' },
+  { name: 'An Cường',  logo: '/partners/ancuong.svg',  w: 160 },
+  { name: 'KES',       logo: '/partners/kes.svg',       w: 100 },
+  { name: 'Häfele',   logo: '/partners/hafele.svg',    w: 140 },
+  { name: 'Blum',     logo: '/partners/blum.svg',      w: 120 },
+  { name: 'Hettich',  logo: '/partners/hettich.svg',   w: 150 },
+  { name: 'TOTO',     logo: '/partners/toto.svg',      w: 120 },
+  { name: 'Kohler',   logo: '/partners/kohler.svg',    w: 150 },
+  { name: 'Dulux',    logo: '/partners/dulux.svg',     w: 130 },
+  { name: 'Nippon',   logo: '/partners/nippon.svg',    w: 160 },
+  { name: 'Grass',    logo: '/partners/grass.svg',     w: 130 },
 ];
 
 export default function Partners() {
@@ -27,11 +29,14 @@ export default function Partners() {
       <div className="partners-track-wrap" aria-hidden="true">
         <div className="partners-track">
           {list.map((p, i) => (
-            <div key={i} className="partner-chip">
-              <span className="partner-chip-name" style={{ color: p.color }}>
-                {p.name}
-              </span>
-              <span className="partner-chip-cat">{p.cat}</span>
+            <div key={i} className="partner-logo-wrap">
+              <Image
+                src={p.logo}
+                alt={p.name}
+                width={p.w}
+                height={56}
+                style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
+              />
             </div>
           ))}
         </div>

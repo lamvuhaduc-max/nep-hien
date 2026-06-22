@@ -1009,36 +1009,17 @@ address { font-style: normal; }
 }
 
 /* Individual partner chip */
-.partner-chip {
+.partner-logo-wrap {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 36px;
-  border-right: 1px solid rgba(201,169,110,.15);
-  white-space: nowrap;
-  transition: opacity .25s;
-  cursor: default;
+  justify-content: center;
+  padding: 8px 48px;
+  border-right: 1px solid rgba(201,169,110,.12);
+  opacity: .75;
+  transition: opacity .3s;
+  flex-shrink: 0;
 }
-.partner-chip:hover { opacity: .8; }
-
-.partner-chip-name {
-  font-family: var(--serif);
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  line-height: 1;
-  transition: opacity .25s;
-}
-
-.partner-chip-cat {
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: rgba(245,239,224,.4);
-  padding-left: 6px;
-  border-left: 1px solid rgba(201,169,110,.2);
-  margin-left: 2px;
-}
+.partner-logo-wrap:hover { opacity: 1; }
 
 /* =========================================
    PROJECT CARDS (home page)

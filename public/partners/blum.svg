@@ -1,0 +1,12 @@
+<svg width="120" height="56" viewBox="0 0 120 56" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blum flower/circle icon -->
+  <circle cx="22" cy="28" r="14" fill="none" stroke="#F5EFE0" stroke-width="2.5"/>
+  <circle cx="22" cy="28" r="5" fill="#F5EFE0"/>
+  <circle cx="22" cy="14" r="3" fill="#F5EFE0" opacity="0.7"/>
+  <circle cx="22" cy="42" r="3" fill="#F5EFE0" opacity="0.7"/>
+  <circle cx="8" cy="28" r="3" fill="#F5EFE0" opacity="0.7"/>
+  <circle cx="36" cy="28" r="3" fill="#F5EFE0" opacity="0.7"/>
+  <!-- Text -->
+  <text x="46" y="32" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#F5EFE0" letter-spacing="1">Blum</text>
+  <text x="46" y="46" font-family="Arial, sans-serif" font-size="8" fill="#C9A96E" letter-spacing="1.5">AUSTRIA</text>
+</svg>

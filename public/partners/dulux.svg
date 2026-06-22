@@ -1,0 +1,8 @@
+<svg width="130" height="56" viewBox="0 0 130 56" xmlns="http://www.w3.org/2000/svg">
+  <!-- Paint drop icon -->
+  <path d="M22 8 Q30 16 30 26 Q30 36 22 40 Q14 36 14 26 Q14 16 22 8Z" fill="none" stroke="#F5EFE0" stroke-width="2.5"/>
+  <path d="M22 20 Q26 24 26 29 Q26 34 22 36" fill="none" stroke="#C9A96E" stroke-width="2" stroke-linecap="round"/>
+  <!-- Text -->
+  <text x="42" y="30" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#F5EFE0" letter-spacing="0.5">Dulux</text>
+  <text x="42" y="45" font-family="Arial, sans-serif" font-size="8" fill="#C9A96E" letter-spacing="1.5">PREMIUM PAINT</text>
+</svg>

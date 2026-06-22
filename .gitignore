@@ -26,3 +26,9 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 node_modules
+
+# Temp folders
+New folder/
+New folder (2)/
+New folder (3)/
+DXX2F9UH26.pdf

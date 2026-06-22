@@ -46,13 +46,13 @@ export default function Stats() {
     <div className="stats-bar" aria-label="Thống kê">
       <div className="wrap stats-inner">
         {STATS.map((s, i) => (
-          <>
-            <div key={s.label} className="stat">
+          <div key={s.label} style={{ display: 'contents' }}>
+            <div className="stat">
               <strong><Counter target={s.target} suffix={s.suffix} /></strong>
               <span>{s.label}</span>
             </div>
             {i < STATS.length - 1 && <div className="stat-divider" aria-hidden="true" />}
-          </>
+          </div>
         ))}
         <div className="stat-divider" aria-hidden="true" />
         <div className="stat">

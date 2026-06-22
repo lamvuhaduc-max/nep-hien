@@ -721,6 +721,140 @@ address { font-style: normal; }
 [hidden] { display: none !important; }
 
 /* =========================================
+   CATALOGUE PAGE (gioi-thieu)
+   ========================================= */
+.catalogue-page { background: var(--bg); }
+
+/* Section 1 – Intro */
+.cat-intro { padding: 120px 0 80px; }
+.cat-intro-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 48px;
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start;
+}
+.cat-intro-text { padding-top: 40px; }
+
+/* Staggered images */
+.cat-intro-images { position: relative; height: 520px; }
+.cat-img-top {
+  position: absolute; top: 0; left: 60px; right: 0; height: 340px;
+  overflow: hidden;
+}
+.cat-img-bottom {
+  position: absolute; bottom: 0; left: 0; width: 55%; height: 240px;
+  overflow: hidden; border: 6px solid var(--bg);
+}
+
+/* Section 2,3,4 – alternating split */
+.cat-section { padding: 0 0 100px; }
+.cat-section-alt { background: var(--bg-alt); padding: 80px 0; }
+.cat-section-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch;
+}
+.cat-section-inner.reverse .cat-section-img { order: 2; }
+.cat-section-inner.reverse .cat-section-text { order: 1; }
+
+.cat-section-img { position: relative; min-height: 480px; overflow: hidden; }
+.cat-section-text {
+  padding: 56px 56px 56px 64px;
+  display: flex; flex-direction: column; justify-content: center; gap: 0;
+  background: var(--bg);
+}
+.cat-section-alt .cat-section-text { background: var(--bg-alt); }
+.cat-section-inner.reverse .cat-section-text { padding: 56px 64px 56px 0; }
+
+/* Typography */
+.cat-title {
+  font-family: var(--serif); font-size: clamp(44px, 6vw, 72px);
+  font-weight: 400; color: var(--text); line-height: 1.05; letter-spacing: -.01em;
+}
+.cat-title-sm {
+  font-family: var(--serif); font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400; color: var(--text); line-height: 1.1; margin-bottom: 24px;
+}
+.cat-body {
+  font-size: 15px; line-height: 1.85; color: var(--muted); margin-top: 24px;
+}
+.cat-label {
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--terra); font-weight: 500;
+}
+
+/* Highlights */
+.cat-highlights { margin-top: 28px; }
+.cat-highlights-title {
+  font-size: 13px; font-weight: 700; letter-spacing: .05em;
+  color: var(--text); margin-bottom: 12px;
+}
+.cat-highlights ul {
+  list-style: none; display: flex; flex-direction: column; gap: 8px;
+}
+.cat-highlights li {
+  font-size: 14px; color: var(--muted); padding-left: 16px; position: relative;
+}
+.cat-highlights li::before {
+  content: '·'; position: absolute; left: 0; color: var(--terra); font-weight: 700;
+}
+.cat-link {
+  display: inline-block; margin-top: 28px;
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--terra); font-weight: 600; text-decoration: underline;
+  text-underline-offset: 4px; transition: color .25s;
+}
+.cat-link:hover { color: var(--terra-dk); }
+
+/* Stats */
+.cat-stats { background: var(--hero-bg); padding: 80px 0; }
+.cat-stats-inner {
+  max-width: var(--max-w); margin: 0 auto; padding: 0 48px;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: rgba(201,169,110,.15);
+}
+.cat-stat {
+  background: var(--hero-bg); padding: 40px 32px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.cat-stat-num {
+  font-family: var(--serif); font-size: 52px; font-weight: 400;
+  color: var(--brass-lt); line-height: 1;
+}
+.cat-stat-label {
+  font-size: 13px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--cream);
+}
+.cat-stat-desc { font-size: 13px; color: rgba(245,239,224,.45); line-height: 1.6; }
+
+/* CTA */
+.cat-cta {
+  position: relative; min-height: 520px;
+  display: flex; align-items: center;
+}
+.cat-cta-img { position: absolute; inset: 0; }
+.cat-cta-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(20,12,8,.85) 50%, rgba(20,12,8,.3) 100%);
+}
+.cat-cta-content {
+  position: relative; z-index: 2;
+  max-width: var(--max-w); margin: 0 auto; padding: 80px 48px;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .cat-intro-inner { grid-template-columns: 1fr; gap: 48px; }
+  .cat-intro-images { height: 320px; }
+  .cat-img-top { left: 0; height: 220px; }
+  .cat-img-bottom { width: 48%; height: 160px; }
+  .cat-section-inner { grid-template-columns: 1fr; }
+  .cat-section-inner.reverse .cat-section-img { order: 0; }
+  .cat-section-img { min-height: 300px; }
+  .cat-section-text { padding: 40px 24px; }
+  .cat-section-inner.reverse .cat-section-text { padding: 40px 24px; }
+  .cat-stats-inner { grid-template-columns: 1fr 1fr; }
+}
+
+/* =========================================
    PAGE LAYOUTS (gioi-thieu, phong-cach, bao-gia)
    ========================================= */
 

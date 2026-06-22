@@ -9,134 +9,201 @@ export const metadata: Metadata = {
   description: 'Hơn 8 năm kiến tạo không gian sống tại TP.HCM. Đội ngũ thiết kế tận tâm, minh bạch từ tư vấn đến bàn giao.',
 };
 
-const VALUES = [
-  { icon: '◎', title: 'Lắng nghe thật sự', desc: 'Mỗi dự án bắt đầu bằng việc hiểu sâu về con người sống trong đó — không gian phải kể đúng câu chuyện của bạn.' },
-  { icon: '◈', title: 'Minh bạch tuyệt đối', desc: 'Dự toán chi tiết từ đầu, không phát sinh ngoài thỏa thuận. Tiến độ báo cáo định kỳ, bạn luôn nắm rõ.' },
-  { icon: '◉', title: 'Chất lượng bền vững', desc: 'Vật liệu chọn lọc từ đối tác uy tín. Thi công tỉ mỉ, bàn giao hoàn thiện. Bảo hành 24 tháng toàn bộ công trình.' },
-];
-
-const MILESTONES = [
-  { year: '2016', event: 'Thành lập Nếp Hiên tại TP.HCM với đội ngũ 5 người' },
-  { year: '2018', event: 'Hoàn thành 50 công trình đầu tiên, mở rộng team thiết kế' },
-  { year: '2020', event: 'Ra mắt dịch vụ thi công trọn gói, nhận giải thưởng nội thất khu vực' },
-  { year: '2022', event: 'Vượt mốc 150 công trình, hợp tác với các thương hiệu vật liệu hàng đầu' },
-  { year: '2024', event: 'Hơn 200 gia đình tin tưởng, mở rộng dịch vụ tư vấn online' },
-];
-
 export default function GioiThieuPage() {
   return (
     <>
       <Header />
-      <main>
-        {/* Hero */}
-        <section className="page-hero">
-          <div className="page-hero-img">
-            <Image
-              src="/images/p1/z7935782332380_3df01d1dc7ee8b4234b9217dbd8e4086.jpg"
-              alt="Nếp Hiên – không gian thiết kế"
-              fill style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
-              priority quality={90}
-            />
-            <div className="page-hero-overlay" />
-          </div>
-          <div className="wrap page-hero-content">
-            <p className="kicker">Về chúng tôi</p>
-            <h1 className="heading-xl">Nếp Hiên —<br /><em>hơn 8 năm kiến tạo</em></h1>
+      <main className="catalogue-page">
+
+        {/* ── SECTION 1: INTRODUCTION ── */}
+        <section className="cat-intro">
+          <div className="cat-intro-inner">
+            {/* Left: title + text */}
+            <div className="cat-intro-text">
+              <h1 className="cat-title">Giới<br />Thiệu</h1>
+              <p className="cat-body">
+                Nếp Hiên ra đời từ niềm tin đơn giản: một ngôi nhà đẹp không
+                chỉ cần thẩm mỹ — nó cần kể được câu chuyện của người sống trong đó.
+              </p>
+              <p className="cat-body" style={{ marginTop: 16 }}>
+                Hơn 8 năm qua, chúng tôi đồng hành cùng hơn 200 gia đình tại
+                TP.HCM kiến tạo không gian vừa đẹp vừa sống — nơi thẩm mỹ và
+                công năng hoà quyện, nơi mỗi góc nhỏ đều có lý do tồn tại.
+              </p>
+              <p className="cat-label" style={{ marginTop: 40 }}>Nếp Hiên · Since 2016</p>
+            </div>
+
+            {/* Right: staggered images */}
+            <div className="cat-intro-images">
+              <div className="cat-img-top">
+                <Image
+                  src="/images/p2/z7896373362819_7cbc02e87da77ba1e47d2ae74d9cd197.jpg"
+                  alt="Không gian phòng khách Nếp Hiên"
+                  fill style={{ objectFit: 'cover', objectPosition: 'center 30%' }}
+                  priority
+                />
+              </div>
+              <div className="cat-img-bottom">
+                <Image
+                  src="/images/p1/z7935782332380_3df01d1dc7ee8b4234b9217dbd8e4086.jpg"
+                  alt="Chi tiết nội thất Nếp Hiên"
+                  fill style={{ objectFit: 'cover' }}
+                />
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Story */}
-        <section className="about-story-section">
-          <div className="wrap about-story-inner">
-            <div className="about-story-text">
-              <p className="kicker">Câu chuyện của chúng tôi</p>
-              <h2 className="heading-lg" style={{ marginTop: 12 }}>
-                Không gian đẹp <em>kể câu chuyện</em> của người sống trong đó
-              </h2>
-              <p style={{ marginTop: 24, lineHeight: 1.85 }}>
-                Nếp Hiên ra đời năm 2016 từ niềm tin rằng một ngôi nhà đẹp không chỉ
-                cần thẩm mỹ — nó cần phản chiếu đúng con người chủ nhân. Chúng tôi
-                không thiết kế theo trend, chúng tôi thiết kế theo người.
+        {/* ── SECTION 2: KHÔNG GIAN SỐNG ── */}
+        <section className="cat-section">
+          <div className="cat-section-inner">
+            {/* Image left */}
+            <div className="cat-section-img">
+              <Image
+                src="/images/p2/z7896373239436_a6453c1ea75694dd3551590316c11802.jpg"
+                alt="Không gian phòng khách sang trọng"
+                fill style={{ objectFit: 'cover' }}
+              />
+            </div>
+            {/* Text right */}
+            <div className="cat-section-text">
+              <h2 className="cat-title-sm">Không Gian<br />Sống</h2>
+              <p className="cat-body">
+                Mỗi phòng khách là trung tâm của ngôi nhà — nơi gia đình quây
+                quần, nơi đón tiếp khách quý. Nếp Hiên thiết kế không gian sống
+                tối ưu cả về thẩm mỹ lẫn công năng, phù hợp với lối sống và
+                cá tính riêng của từng gia chủ.
               </p>
-              <p style={{ marginTop: 16, lineHeight: 1.85 }}>
-                Sau hơn 8 năm, hơn 200 công trình và hàng trăm gia đình hài lòng,
-                triết lý ấy vẫn là kim chỉ nam trong từng dự án. Mỗi góc nhỏ đều
-                được cân nhắc kỹ lưỡng — từ chiều cao mặt bàn đến hướng ánh sáng
-                buổi sáng chiếu vào phòng ngủ.
-              </p>
-              <Link href="/#contact-form" className="btn btn-gold" style={{ marginTop: 32, display: 'inline-flex' }}>
-                Bắt đầu dự án của bạn →
+              <div className="cat-highlights">
+                <p className="cat-highlights-title">Điểm nổi bật:</p>
+                <ul>
+                  <li>Bố cục tối ưu ánh sáng tự nhiên</li>
+                  <li>Sofa, bàn trà từ vật liệu cao cấp</li>
+                  <li>Tone màu trung tính ấm, dễ phối đồ</li>
+                  <li>Tích hợp không gian lưu trữ thông minh</li>
+                </ul>
+              </div>
+              <Link href="/du-an/can-ho-hien-dai" className="cat-link">
+                Xem dự án Căn Hộ Hiện Đại →
               </Link>
             </div>
-            <div className="about-story-stats">
-              {[
-                { num: '8+',   label: 'Năm kinh nghiệm' },
-                { num: '200+', label: 'Công trình hoàn thành' },
-                { num: '98%',  label: 'Khách hàng hài lòng' },
-                { num: '24T',  label: 'Bảo hành công trình' },
-              ].map(s => (
-                <div key={s.label} className="story-stat">
-                  <strong>{s.num}</strong>
-                  <span>{s.label}</span>
-                </div>
-              ))}
+          </div>
+        </section>
+
+        {/* ── SECTION 3: PHÒNG NGỦ ── */}
+        <section className="cat-section cat-section-alt">
+          <div className="cat-section-inner reverse">
+            {/* Text left */}
+            <div className="cat-section-text">
+              <h2 className="cat-title-sm">Phòng<br />Ngủ</h2>
+              <p className="cat-body">
+                Phòng ngủ là thánh địa riêng tư nhất trong ngôi nhà. Chúng tôi
+                thiết kế từng chi tiết — từ nhiệt độ màu ánh đèn, chiều cao đầu
+                giường đến hệ tủ âm tường — để tạo nên không gian nghỉ ngơi
+                hoàn hảo theo đúng nghĩa.
+              </p>
+              <div className="cat-highlights">
+                <p className="cat-highlights-title">Điểm nổi bật:</p>
+                <ul>
+                  <li>Giường King & Queen gỗ sồi, gỗ óc chó</li>
+                  <li>Hệ tủ âm tường tối đa diện tích</li>
+                  <li>Đèn ngủ âm trần, đèn đầu giường tinh tế</li>
+                  <li>Bảng đầu giường bọc da hoặc vải linen</li>
+                </ul>
+              </div>
+              <Link href="/du-an/chung-cu-indochine" className="cat-link">
+                Xem dự án Chung Cư Indochine →
+              </Link>
+            </div>
+            {/* Image right */}
+            <div className="cat-section-img">
+              <Image
+                src="/images/p2/z7896373239443_4006c298acf9452090583f551ee66e75.jpg"
+                alt="Phòng ngủ cao cấp Nếp Hiên"
+                fill style={{ objectFit: 'cover' }}
+              />
             </div>
           </div>
         </section>
 
-        {/* Values */}
-        <section className="values-section">
-          <div className="wrap">
-            <div className="section-header text-center">
-              <p className="kicker">Giá trị cốt lõi</p>
-              <h2 className="heading-lg" style={{ marginTop: 12 }}>
-                Điều làm nên <em>sự khác biệt</em>
-              </h2>
+        {/* ── SECTION 4: VĂN PHÒNG ── */}
+        <section className="cat-section">
+          <div className="cat-section-inner">
+            <div className="cat-section-img">
+              <Image
+                src="/images/p3/z7896845533158_7fae4a5fa5bb45a0de03b4a65c192eab.jpg"
+                alt="Văn phòng Wabi-Sabi"
+                fill style={{ objectFit: 'cover' }}
+              />
             </div>
-            <div className="values-grid">
-              {VALUES.map(v => (
-                <div key={v.title} className="value-card">
-                  <span className="value-icon">{v.icon}</span>
-                  <h3 className="value-title">{v.title}</h3>
-                  <p className="value-desc">{v.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline */}
-        <section className="timeline-section">
-          <div className="wrap">
-            <div className="section-header text-center">
-              <p className="kicker">Hành trình phát triển</p>
-              <h2 className="heading-lg" style={{ marginTop: 12 }}>Từng <em>mốc quan trọng</em></h2>
-            </div>
-            <div className="timeline">
-              {MILESTONES.map((m, i) => (
-                <div key={m.year} className={`timeline-item ${i % 2 === 0 ? 'left' : 'right'}`}>
-                  <div className="timeline-year">{m.year}</div>
-                  <div className="timeline-dot" />
-                  <div className="timeline-content">{m.event}</div>
-                </div>
-              ))}
+            <div className="cat-section-text">
+              <h2 className="cat-title-sm">Văn Phòng<br />& Thương Mại</h2>
+              <p className="cat-body">
+                Không gian làm việc tác động trực tiếp đến hiệu suất và văn hoá
+                doanh nghiệp. Nếp Hiên thiết kế văn phòng theo triết lý
+                Wabi-Sabi — môi trường thư thái, sáng tạo và truyền cảm hứng
+                cho cả đội ngũ.
+              </p>
+              <div className="cat-highlights">
+                <p className="cat-highlights-title">Điểm nổi bật:</p>
+                <ul>
+                  <li>Bố cục tối ưu giao tiếp và tập trung</li>
+                  <li>Vật liệu tự nhiên: gỗ, đất nung, linen</li>
+                  <li>Cây xanh nội thất tạo không khí trong lành</li>
+                  <li>Phòng họp riêng, khu pantry ấm cúng</li>
+                </ul>
+              </div>
+              <Link href="/du-an/van-phong-wabi-sabi" className="cat-link">
+                Xem dự án Văn Phòng Wabi-Sabi →
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="page-cta-section">
-          <div className="wrap text-center">
-            <h2 className="heading-lg">Sẵn sàng bắt đầu <em>dự án của bạn</em>?</h2>
-            <p className="section-desc" style={{ marginTop: 16 }}>
-              Tư vấn miễn phí — team Nếp Hiên sẽ liên hệ trong vòng 24 giờ.
+        {/* ── SECTION 5: STATS ── */}
+        <section className="cat-stats">
+          <div className="cat-stats-inner">
+            {[
+              { num: '8+',   label: 'Năm kinh nghiệm', desc: 'Tích lũy từ hàng trăm công trình thực tế' },
+              { num: '200+', label: 'Công trình', desc: 'Căn hộ, biệt thự, văn phòng đã hoàn thiện' },
+              { num: '98%',  label: 'Hài lòng', desc: 'Khách hàng đánh giá 5 sao sau bàn giao' },
+              { num: '24T',  label: 'Bảo hành', desc: 'Cam kết toàn bộ hạng mục thi công' },
+            ].map(s => (
+              <div key={s.label} className="cat-stat">
+                <span className="cat-stat-num">{s.num}</span>
+                <span className="cat-stat-label">{s.label}</span>
+                <span className="cat-stat-desc">{s.desc}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── SECTION 6: CTA ── */}
+        <section className="cat-cta">
+          <div className="cat-cta-img">
+            <Image
+              src="/images/p1/z7935782332344_8e8cf0dee2431dd94b0b146b9b958826.jpg"
+              alt="Nếp Hiên – không gian sống"
+              fill style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
+            />
+            <div className="cat-cta-overlay" />
+          </div>
+          <div className="cat-cta-content">
+            <p className="kicker" style={{ color: 'var(--brass-lt)' }}>Bắt đầu hành trình</p>
+            <h2 className="heading-lg" style={{ color: 'var(--cream)', marginTop: 12 }}>
+              Ngôi nhà của bạn<br /><em>xứng đáng được đẹp hơn</em>
+            </h2>
+            <p style={{ color: 'rgba(245,239,224,.7)', marginTop: 20, maxWidth: 480, lineHeight: 1.8 }}>
+              Tư vấn miễn phí — không ràng buộc. Chỉ cần chia sẻ ý tưởng,
+              Nếp Hiên sẽ giúp bạn hình dung không gian trong vòng 48 giờ.
             </p>
-            <div style={{ display: 'flex', gap: 16, justifyContent: 'center', marginTop: 32, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 16, marginTop: 36, flexWrap: 'wrap' }}>
               <Link href="/#contact-form" className="btn btn-gold">Đăng ký tư vấn →</Link>
-              <Link href="/du-an" className="btn btn-outline">Xem công trình</Link>
+              <Link href="/du-an" className="btn btn-ghost">Xem công trình</Link>
             </div>
           </div>
         </section>
+
       </main>
       <Footer />
     </>

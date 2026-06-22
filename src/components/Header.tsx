@@ -7,15 +7,15 @@ import Link from 'next/link';
 type DropItem = { label: string; href: string };
 type NavItem  = { label: string; href: string; dropdown?: DropItem[] };
 
-const NAV: NavItem[] = [
+const NAV_LEFT: NavItem[] = [
   { label: 'Giới Thiệu', href: '/gioi-thieu' },
   {
     label: 'Dịch Vụ',
     href: '/#services',
     dropdown: [
-      { label: 'Thiết kế nội thất',   href: '/#services' },
-      { label: 'Thi công trọn gói',   href: '/#services' },
-      { label: 'Cải tạo không gian',  href: '/#services' },
+      { label: 'Thiết kế nội thất',  href: '/#services' },
+      { label: 'Thi công trọn gói',  href: '/#services' },
+      { label: 'Cải tạo không gian', href: '/#services' },
     ],
   },
   {
@@ -28,19 +28,24 @@ const NAV: NavItem[] = [
       { label: 'Xem tất cả →',        href: '/du-an' },
     ],
   },
+];
+
+const NAV_RIGHT: NavItem[] = [
   { label: 'Phong Cách', href: '/phong-cach' },
-  { label: 'Báo Giá',    href: '/bao-gia' },
-  { label: 'Cẩm Nang',  href: '/#about' },
+  { label: 'Báo Giá',    href: '/bao-gia'    },
+  { label: 'Cẩm Nang',  href: '/#about'     },
   { label: 'Liên Hệ',   href: '/#contact-form' },
 ];
 
+const ALL_NAV = [...NAV_LEFT, ...NAV_RIGHT];
+
 export default function Header() {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [navOpen,     setNavOpen]     = useState(false);
-  const [openDrop,    setOpenDrop]    = useState<string | null>(null);
-  const [topBarHide,  setTopBarHide]  = useState(false);
-  const lastScrollY  = useRef(0);
-  const closeTimer   = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [scrolled,   setScrolled]   = useState(false);
+  const [navOpen,    setNavOpen]    = useState(false);
+  const [openDrop,   setOpenDrop]   = useState<string | null>(null);
+  const [topBarHide, setTopBarHide] = useState(false);
+  const lastScrollY = useRef(0);
+  const closeTimer  = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onScroll = () => {
@@ -71,17 +76,51 @@ export default function Header() {
     setOpenDrop(null);
   }, []);
 
-  const toggleDrop = (label: string) =>
-    setOpenDrop(prev => (prev === label ? null : label));
-
+  const toggleDrop      = (label: string) =>
+    setOpenDrop(prev => prev === label ? null : label);
   const openDropDelayed = (label: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     setOpenDrop(label);
   };
-
   const closeDropDelayed = () => {
     closeTimer.current = setTimeout(() => setOpenDrop(null), 180);
   };
+
+  const renderNavItems = (items: NavItem[]) =>
+    items.map(item => (
+      <li
+        key={item.label}
+        className={item.dropdown ? 'has-dropdown' : ''}
+        onMouseEnter={() => item.dropdown && openDropDelayed(item.label)}
+        onMouseLeave={() => item.dropdown && closeDropDelayed()}
+      >
+        <Link
+          href={item.href}
+          onClick={item.dropdown ? (e) => { e.preventDefault(); toggleDrop(item.label); } : closeAll}
+          aria-haspopup={!!item.dropdown}
+          aria-expanded={openDrop === item.label}
+        >
+          {item.label}
+          {item.dropdown && (
+            <span className={`drop-arrow${openDrop === item.label ? ' open' : ''}`} aria-hidden="true">▾</span>
+          )}
+        </Link>
+        {item.dropdown && (
+          <ul
+            className={`dropdown${openDrop === item.label ? ' open' : ''}`}
+            role="menu"
+            onMouseEnter={() => closeTimer.current && clearTimeout(closeTimer.current)}
+            onMouseLeave={closeDropDelayed}
+          >
+            {item.dropdown.map(d => (
+              <li key={d.label} role="none">
+                <Link href={d.href} role="menuitem" onClick={closeAll}>{d.label}</Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    ));
 
   return (
     <header className={`site-header${scrolled ? ' scrolled' : ''}`} id="site-header">
@@ -93,89 +132,56 @@ export default function Header() {
             ✦ Thiết kế · Thi công · Kiến tạo không gian sống — Since 2016
           </span>
           <div className="top-contacts">
-            <a href="tel:+84901234567" aria-label="Gọi điện">☎ 0901 234 567</a>
-            <a href="mailto:dvkh247@nephien.com" aria-label="Gửi email">✉ dvkh247@nephien.com</a>
-            <a href="#" aria-label="Zalo">Zalo</a>
-            <a href="#" aria-label="Facebook">Facebook</a>
-            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="tel:+84901234567">☎ 0901 234 567</a>
+            <a href="mailto:dvkh247@nephien.com">✉ dvkh247@nephien.com</a>
+            <a href="#">Zalo</a>
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
           </div>
         </div>
       </div>
 
-      {/* ── MAIN NAV BAR ── */}
+      {/* ── MAIN NAV BAR — centered logo layout ── */}
       <div className="nav-bar">
-        <div className="wrap header-inner">
+        <div className="wrap header-inner-center">
 
-          {/* Logo */}
-          <Link href="/" className="logo-wrap" aria-label="Nếp Hiên – Trang chủ" onClick={closeAll}>
+          {/* Left nav */}
+          <nav className="site-nav site-nav-left" aria-label="Menu trái">
+            <ul>{renderNavItems(NAV_LEFT)}</ul>
+          </nav>
+
+          {/* Center Logo */}
+          <Link href="/" className="logo-wrap logo-center" aria-label="Nếp Hiên – Trang chủ" onClick={closeAll}>
             <Image
               src={scrolled ? '/logo.svg' : '/logo-light.svg'}
               alt="Nếp Hiên"
-              width={150}
-              height={44}
+              width={180}
+              height={52}
               className="logo-img"
               priority
             />
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="site-nav" id="site-nav" aria-label="Menu chính">
-            <ul>
-              {NAV.map(item => (
-                <li
-                  key={item.label}
-                  className={item.dropdown ? 'has-dropdown' : ''}
-                  onMouseEnter={() => item.dropdown && openDropDelayed(item.label)}
-                  onMouseLeave={() => item.dropdown && closeDropDelayed()}
-                >
-                  <a
-                    href={item.href}
-                    onClick={item.dropdown
-                      ? (e) => { e.preventDefault(); toggleDrop(item.label); }
-                      : closeAll}
-                    aria-haspopup={!!item.dropdown}
-                    aria-expanded={openDrop === item.label}
-                  >
-                    {item.label}
-                    {item.dropdown && (
-                      <span className={`drop-arrow${openDrop === item.label ? ' open' : ''}`} aria-hidden="true">▾</span>
-                    )}
-                  </a>
-
-                  {item.dropdown && (
-                    <ul
-                      className={`dropdown${openDrop === item.label ? ' open' : ''}`}
-                      role="menu"
-                      onMouseEnter={() => closeTimer.current && clearTimeout(closeTimer.current)}
-                      onMouseLeave={closeDropDelayed}
-                    >
-                      {item.dropdown.map(d => (
-                        <li key={d.label} role="none">
-                          <a href={d.href} role="menuitem" onClick={closeAll}>{d.label}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {/* CTA + hamburger */}
-          <div className="header-right">
-            <a href="#contact-form" className="btn btn-cta" onClick={closeAll}>
+          {/* Right nav + CTA */}
+          <div className="site-nav-right-wrap">
+            <nav className="site-nav site-nav-right" aria-label="Menu phải">
+              <ul>{renderNavItems(NAV_RIGHT)}</ul>
+            </nav>
+            <Link href="/#contact-form" className="btn btn-cta" onClick={closeAll}>
               Đăng Ký Tư Vấn
-            </a>
-            <button
-              className={`nav-toggle${navOpen ? ' active' : ''}`}
-              onClick={() => setNavOpen(o => !o)}
-              aria-label={navOpen ? 'Đóng menu' : 'Mở menu'}
-              aria-expanded={navOpen}
-              aria-controls="mobile-nav"
-            >
-              <span /><span /><span />
-            </button>
+            </Link>
           </div>
+
+          {/* Hamburger (mobile) */}
+          <button
+            className={`nav-toggle${navOpen ? ' active' : ''}`}
+            onClick={() => setNavOpen(o => !o)}
+            aria-label={navOpen ? 'Đóng menu' : 'Mở menu'}
+            aria-expanded={navOpen}
+            aria-controls="mobile-nav"
+          >
+            <span /><span /><span />
+          </button>
         </div>
       </div>
 
@@ -187,7 +193,7 @@ export default function Header() {
         aria-hidden={!navOpen}
       >
         <ul>
-          {NAV.map(item => (
+          {ALL_NAV.map(item => (
             <li key={item.label} className={item.dropdown ? 'mob-has-drop' : ''}>
               {item.dropdown ? (
                 <>
@@ -201,20 +207,20 @@ export default function Header() {
                   <ul className={`mob-dropdown${openDrop === item.label ? ' open' : ''}`}>
                     {item.dropdown.map(d => (
                       <li key={d.label}>
-                        <a href={d.href} onClick={closeAll}>{d.label}</a>
+                        <Link href={d.href} onClick={closeAll}>{d.label}</Link>
                       </li>
                     ))}
                   </ul>
                 </>
               ) : (
-                <a href={item.href} onClick={closeAll}>{item.label}</a>
+                <Link href={item.href} onClick={closeAll}>{item.label}</Link>
               )}
             </li>
           ))}
           <li>
-            <a href="#contact-form" className="mob-cta" onClick={closeAll}>
+            <Link href="/#contact-form" className="mob-cta" onClick={closeAll}>
               Đăng Ký Tư Vấn
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

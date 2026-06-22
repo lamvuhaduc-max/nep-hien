@@ -211,9 +211,35 @@ address { font-style: normal; }
   box-shadow: 0 2px 24px rgba(31,32,32,.08);
 }
 
+/* Old layout (unused) */
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+
+/* ── CENTERED LOGO LAYOUT ── */
+.header-inner-center {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
 .logo-wrap { display: flex; align-items: center; flex-shrink: 0; }
-.logo-img { height: 38px; width: auto; }
+.logo-center {
+  justify-self: center;
+  padding: 0 32px;
+  transition: transform .3s var(--ease), opacity .3s;
+}
+.logo-center:hover { transform: scale(1.03); opacity: .9; }
+.logo-img { height: 44px; width: auto; }
+
+/* Left nav — align right */
+.site-nav-left > ul { justify-content: flex-end; }
+
+/* Right nav + CTA */
+.site-nav-right-wrap {
+  display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+}
+.site-nav-right { flex-shrink: 0; }
 
 /* Desktop nav links — default over dark hero */
 .site-nav { display: flex; align-items: center; }

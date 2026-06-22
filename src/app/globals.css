@@ -1021,13 +1021,14 @@ address { font-style: normal; }
 }
 .partner-logo-wrap:hover { opacity: 1; }
 
-/* Invert dark logos to white for dark background */
-.partner-logo-wrap img {
+/* SVG logos — giữ màu cream/white đã thiết kế */
+.partner-logo-wrap img[src$=".svg"] {
   filter: brightness(0) invert(1);
-  transition: filter .3s;
 }
-.partner-logo-wrap:hover img {
-  filter: brightness(0) invert(1) sepia(0.3) saturate(2) hue-rotate(10deg);
+/* PNG logos thật — hiển thị màu gốc, bo góc nhẹ */
+.partner-logo-wrap img[src$=".png"] {
+  filter: none;
+  border-radius: 4px;
 }
 
 /* =========================================

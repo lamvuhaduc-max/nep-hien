@@ -3,16 +3,16 @@
 import Image from 'next/image';
 
 const PARTNERS = [
-  { name: 'An Cường',  logo: '/partners/ancuong-real.png', w: 160 },
-  { name: 'KES',       logo: '/partners/kes.svg',           w: 100 },
-  { name: 'Häfele',   logo: '/partners/hafele.svg',        w: 140 },
-  { name: 'Blum',     logo: '/partners/blum-real.svg',     w: 120 },
-  { name: 'Hettich',  logo: '/partners/hettich.svg',       w: 150 },
-  { name: 'TOTO',     logo: '/partners/toto-real.svg',     w: 120 },
-  { name: 'Kohler',   logo: '/partners/kohler.svg',        w: 150 },
-  { name: 'Dulux',    logo: '/partners/dulux.svg',         w: 130 },
-  { name: 'Nippon',   logo: '/partners/nippon.svg',        w: 160 },
-  { name: 'Grass',    logo: '/partners/grass.svg',         w: 130 },
+  { name: 'An Cường',  logo: '/partners/ancuong.svg',      w: 200, color: true  },
+  { name: 'KES',       logo: '/partners/kes.svg',           w: 100, color: false },
+  { name: 'Häfele',   logo: '/partners/hafele.svg',        w: 140, color: false },
+  { name: 'Blum',     logo: '/partners/blum-real.svg',     w: 120, color: false },
+  { name: 'Hettich',  logo: '/partners/hettich.svg',       w: 150, color: true  },
+  { name: 'TOTO',     logo: '/partners/toto-real.svg',     w: 120, color: false },
+  { name: 'Kohler',   logo: '/partners/kohler.svg',        w: 150, color: false },
+  { name: 'Dulux',    logo: '/partners/dulux.svg',         w: 130, color: false },
+  { name: 'Nippon',   logo: '/partners/nippon.svg',        w: 160, color: false },
+  { name: 'Grass',    logo: '/partners/grass.svg',         w: 130, color: false },
 ];
 
 export default function Partners() {
@@ -35,7 +35,14 @@ export default function Partners() {
                 alt={p.name}
                 width={p.w}
                 height={56}
-                style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
+                style={{
+                  height: '40px',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  // color logos: hiển thị màu gốc
+                  // white-on-transparent logos: invert để thành cream
+                  filter: p.color ? 'none' : 'brightness(0) invert(1)',
+                }}
               />
             </div>
           ))}

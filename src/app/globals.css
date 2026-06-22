@@ -1015,11 +1015,20 @@ address { font-style: normal; }
   justify-content: center;
   padding: 8px 48px;
   border-right: 1px solid rgba(201,169,110,.12);
-  opacity: .75;
+  opacity: .65;
   transition: opacity .3s;
   flex-shrink: 0;
 }
 .partner-logo-wrap:hover { opacity: 1; }
+
+/* Invert dark logos to white for dark background */
+.partner-logo-wrap img {
+  filter: brightness(0) invert(1);
+  transition: filter .3s;
+}
+.partner-logo-wrap:hover img {
+  filter: brightness(0) invert(1) sepia(0.3) saturate(2) hue-rotate(10deg);
+}
 
 /* =========================================
    PROJECT CARDS (home page)

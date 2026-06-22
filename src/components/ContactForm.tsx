@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, FormEvent } from 'react';
+import Image from 'next/image';
 
 const PHONE_RE = /^(\+?84|0)[35789]\d{8}$/;
 
@@ -11,16 +12,16 @@ function validateName(v: string) {
 }
 function validatePhone(v: string) {
   const c = v.replace(/[\s.\-()]/g, '');
-  if (!c)                  return 'Vui lòng nhập số điện thoại.';
-  if (!PHONE_RE.test(c))   return 'Số điện thoại không hợp lệ. VD: 0901 234 567';
+  if (!c)               return 'Vui lòng nhập số điện thoại.';
+  if (!PHONE_RE.test(c)) return 'Số không hợp lệ. VD: 0901 234 567';
   return '';
 }
 
 export default function ContactForm() {
-  const [errors,   setErrors]   = useState({ name: '', phone: '' });
-  const [loading,  setLoading]  = useState(false);
-  const [success,  setSuccess]  = useState(false);
-  const [toast,    setToast]    = useState('');
+  const [errors,  setErrors]  = useState({ name: '', phone: '' });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [toast,   setToast]   = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
   function showToast(msg: string) {
@@ -28,46 +29,27 @@ export default function ContactForm() {
     setTimeout(() => setToast(''), 5000);
   }
 
-  function blurName(e: React.FocusEvent<HTMLInputElement>) {
-    setErrors(prev => ({ ...prev, name: validateName(e.target.value) }));
-  }
-  function blurPhone(e: React.FocusEvent<HTMLInputElement>) {
-    setErrors(prev => ({ ...prev, phone: validatePhone(e.target.value) }));
-  }
-  function inputName(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.value.trim()) setErrors(prev => ({ ...prev, name: '' }));
-  }
-  function inputPhone(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.value.trim()) setErrors(prev => ({ ...prev, phone: '' }));
-  }
+  const blurName  = (e: React.FocusEvent<HTMLInputElement>) =>
+    setErrors(p => ({ ...p, name: validateName(e.target.value) }));
+  const blurPhone = (e: React.FocusEvent<HTMLInputElement>) =>
+    setErrors(p => ({ ...p, phone: validatePhone(e.target.value) }));
+  const clearName  = (e: React.ChangeEvent<HTMLInputElement>) =>
+    e.target.value.trim() && setErrors(p => ({ ...p, name: '' }));
+  const clearPhone = (e: React.ChangeEvent<HTMLInputElement>) =>
+    e.target.value.trim() && setErrors(p => ({ ...p, phone: '' }));
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const nameVal  = (form.elements.namedItem('name')  as HTMLInputElement).value;
     const phoneVal = (form.elements.namedItem('phone') as HTMLInputElement).value;
-
     const nameErr  = validateName(nameVal);
     const phoneErr = validatePhone(phoneVal);
     setErrors({ name: nameErr, phone: phoneErr });
-
     if (nameErr || phoneErr) {
-      const el = nameErr
-        ? form.querySelector<HTMLInputElement>('#name')
-        : form.querySelector<HTMLInputElement>('#phone');
-      el?.focus();
+      form.querySelector<HTMLInputElement>(nameErr ? '#cf-name' : '#cf-phone')?.focus();
       return;
     }
-
-    // Demo mode: simulate success after 1.2s
-    if (form.action.includes('YOUR_FORM_ID')) {
-      setLoading(true);
-      await new Promise(r => setTimeout(r, 1200));
-      setLoading(false);
-      setSuccess(true);
-      return;
-    }
-
     setLoading(true);
     try {
       const res = await fetch(form.action, {
@@ -75,14 +57,13 @@ export default function ContactForm() {
         body: new FormData(form),
         headers: { Accept: 'application/json' },
       });
-      if (res.ok) {
-        setSuccess(true);
-      } else {
+      if (res.ok) { setSuccess(true); }
+      else {
         const data = await res.json().catch(() => ({}));
         throw new Error((data as { error?: string }).error || `Lỗi ${res.status}`);
       }
     } catch (err) {
-      showToast(`❌ ${err instanceof Error ? err.message : 'Không thể gửi. Thử lại sau.'}`);
+      showToast(`Không thể gửi. Vui lòng thử lại hoặc gọi trực tiếp 0901 234 567`);
     } finally {
       setLoading(false);
     }
@@ -90,138 +71,150 @@ export default function ContactForm() {
 
   return (
     <>
-      <section className="contact-section" id="contact-form" aria-labelledby="form-heading">
-        <div className="contact-glow" aria-hidden="true" />
+      <section className="cf-section" id="contact-form" aria-labelledby="cf-heading">
 
-        <div className="wrap text-center">
-          <p className="kicker">Bắt đầu câu chuyện</p>
-          <h2 id="form-heading" className="heading-lg" style={{ marginTop: 14 }}>
-            Hiện thực hóa <em>không gian</em> của bạn
-          </h2>
-          <p className="section-desc" style={{ margin: '12px auto 0' }}>
-            Điền thông tin bên dưới — team Nếp Hiên sẽ liên hệ trong vòng <strong>24 giờ</strong>.
-          </p>
+        {/* Left — image + info */}
+        <div className="cf-left">
+          <div className="cf-bg-img">
+            <Image
+              src="/images/p1/z7935782332344_8e8cf0dee2431dd94b0b146b9b958826.jpg"
+              alt="Nội thất Nếp Hiên"
+              fill style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
+              quality={70}
+            />
+            <div className="cf-img-overlay" />
+          </div>
+          <div className="cf-left-content">
+            <p className="kicker" style={{ color: 'var(--brass-lt)' }}>Bắt đầu hành trình</p>
+            <h2 id="cf-heading" className="heading-lg" style={{ color: 'var(--cream)', marginTop: 12 }}>
+              Tư vấn<br /><em>miễn phí</em>
+            </h2>
+            <div className="cf-info-list">
+              <div className="cf-info-item">
+                <span className="cf-info-icon">📍</span>
+                <span>14 Đường 41, An Khánh, TP.HCM</span>
+              </div>
+              <div className="cf-info-item">
+                <span className="cf-info-icon">📞</span>
+                <a href="tel:+84901234567">0901 234 567</a>
+              </div>
+              <div className="cf-info-item">
+                <span className="cf-info-icon">✉</span>
+                <a href="mailto:dvkh247@nephien.com">dvkh247@nephien.com</a>
+              </div>
+              <div className="cf-info-item">
+                <span className="cf-info-icon">⏰</span>
+                <span>Thứ 2 – Thứ 7 · 8:00 – 18:00</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="wrap cgrid-form">
+        {/* Right — form */}
+        <div className="cf-right">
           {success ? (
-            <div className="form-success" role="alert">
-              <div className="success-icon" aria-hidden="true">✓</div>
+            <div className="cf-success">
+              <div className="cf-success-icon">✓</div>
               <h3>Gửi thành công!</h3>
-              <p>
-                Cảm ơn bạn đã liên hệ. Team thiết kế Nếp Hiên sẽ gọi lại trong vòng 24 giờ.
-              </p>
-              <a href="#home" className="btn btn-gold" style={{ marginTop: 24, display: 'inline-flex' }}>
+              <p>Team Nếp Hiên sẽ gọi lại cho bạn trong vòng <strong>24 giờ</strong>.</p>
+              <a href="#home" className="btn btn-gold" style={{ marginTop: 28, display: 'inline-flex' }}>
                 Về trang chủ
               </a>
             </div>
           ) : (
-            /*
-             * Formspree setup:
-             * 1. Vào https://formspree.io → tạo tài khoản
-             * 2. Tạo form mới → lấy endpoint dạng https://formspree.io/f/xyzabcde
-             * 3. Thay YOUR_FORM_ID bên dưới bằng ID thực
-             */
             <form
               ref={formRef}
               action="https://formspree.io/f/mdavqbdv"
               method="POST"
               noValidate
               onSubmit={handleSubmit}
-              aria-label="Form đăng ký tư vấn nội thất"
+              className="cf-form"
             >
-              {/* Tên */}
-              <div className={`field${errors.name ? ' has-error' : ''}`} id="field-name">
-                <label htmlFor="name">
-                  Tên của bạn <span className="required" aria-label="bắt buộc">*</span>
-                </label>
-                <input
-                  type="text" id="name" name="name"
-                  placeholder="VD: Trần Văn A"
-                  required autoComplete="name"
-                  aria-describedby="name-error"
-                  onBlur={blurName} onChange={inputName}
-                />
-                <span className="field-error" id="name-error" role="alert" aria-live="polite">
-                  {errors.name}
-                </span>
-              </div>
+              <h3 className="cf-form-title">Điền thông tin của bạn</h3>
+              <p className="cf-form-sub">Chúng tôi sẽ phản hồi trong vòng 24 giờ</p>
 
-              {/* Phone */}
-              <div className={`field${errors.phone ? ' has-error' : ''}`} id="field-phone">
-                <label htmlFor="phone">
-                  Số điện thoại <span className="required" aria-label="bắt buộc">*</span>
-                </label>
-                <input
-                  type="tel" id="phone" name="phone"
-                  placeholder="Để team gọi lại tư vấn nè"
-                  required autoComplete="tel" inputMode="numeric"
-                  aria-describedby="phone-error"
-                  onBlur={blurPhone} onChange={inputPhone}
-                />
-                <span className="field-error" id="phone-error" role="alert" aria-live="polite">
-                  {errors.phone}
-                </span>
+              {/* Row 1: Tên + SĐT */}
+              <div className="cf-row">
+                <div className={`cf-field${errors.name ? ' error' : ''}`}>
+                  <label htmlFor="cf-name">Họ và tên *</label>
+                  <input
+                    type="text" id="cf-name" name="name"
+                    placeholder="Nguyễn Văn A"
+                    autoComplete="name"
+                    onBlur={blurName} onChange={clearName}
+                  />
+                  {errors.name && <span className="cf-error">{errors.name}</span>}
+                </div>
+                <div className={`cf-field${errors.phone ? ' error' : ''}`}>
+                  <label htmlFor="cf-phone">Số điện thoại *</label>
+                  <input
+                    type="tel" id="cf-phone" name="phone"
+                    placeholder="0901 234 567"
+                    autoComplete="tel" inputMode="numeric"
+                    onBlur={blurPhone} onChange={clearPhone}
+                  />
+                  {errors.phone && <span className="cf-error">{errors.phone}</span>}
+                </div>
               </div>
 
               {/* Dịch vụ */}
-              <div className="field">
-                <label htmlFor="service">Bạn quan tâm dịch vụ nào?</label>
-                <select id="service" name="service" aria-describedby="service-hint">
+              <div className="cf-field">
+                <label htmlFor="cf-service">Dịch vụ quan tâm</label>
+                <select id="cf-service" name="service">
                   <option value="">— Chọn dịch vụ —</option>
                   <option value="Thiết kế nội thất">Thiết kế nội thất</option>
                   <option value="Thi công trọn gói">Thi công trọn gói</option>
                   <option value="Cải tạo không gian">Cải tạo không gian</option>
                   <option value="Tư vấn chung">Tư vấn chung</option>
                 </select>
-                <span className="field-hint" id="service-hint">
-                  Không chắc? Chọn "Tư vấn chung" — team sẽ định hướng phù hợp.
-                </span>
+              </div>
+
+              {/* Diện tích */}
+              <div className="cf-field">
+                <label htmlFor="cf-area">Diện tích không gian</label>
+                <select id="cf-area" name="area">
+                  <option value="">— Chọn diện tích —</option>
+                  <option value="Dưới 50m²">Dưới 50m²</option>
+                  <option value="50 – 100m²">50 – 100m²</option>
+                  <option value="100 – 200m²">100 – 200m²</option>
+                  <option value="Trên 200m²">Trên 200m²</option>
+                </select>
               </div>
 
               {/* Lời nhắn */}
-              <div className="field">
-                <label htmlFor="message">
-                  Chia sẻ ý tưởng của bạn{' '}
-                  <span className="optional">(không bắt buộc)</span>
-                </label>
+              <div className="cf-field">
+                <label htmlFor="cf-message">Ý tưởng của bạn <span className="cf-optional">(không bắt buộc)</span></label>
                 <textarea
-                  id="message" name="message" rows={4}
-                  placeholder="VD: Mình thích tone màu trầm, tối giản, muốn cải tạo phòng khách 30m²..."
-                  aria-describedby="message-hint"
+                  id="cf-message" name="message" rows={4}
+                  placeholder="Chia sẻ thêm về phong cách, ngân sách, hoặc bất kỳ yêu cầu đặc biệt nào..."
                 />
-                <span className="field-hint" id="message-hint">
-                  Càng chi tiết, tư vấn càng sát nhu cầu.
-                </span>
               </div>
 
-              <p className="privacy-note">
-                🔒 Thông tin của bạn được bảo mật hoàn toàn.
-              </p>
-
-              <button
-                type="submit"
-                className={`btn btn-gold btn-submit${loading ? ' loading' : ''}`}
-                disabled={loading}
-              >
-                <span className="btn-text">Gửi yêu cầu ngay →</span>
-                <span className="btn-loading" aria-hidden="true">
-                  <svg className="spinner" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" strokeDasharray="30 70" />
-                  </svg>
-                  Đang gửi…
-                </span>
-              </button>
+              <div className="cf-footer-row">
+                <p className="cf-privacy">🔒 Thông tin được bảo mật tuyệt đối</p>
+                <button
+                  type="submit"
+                  className={`btn btn-gold cf-submit${loading ? ' loading' : ''}`}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <svg className="spinner" viewBox="0 0 24 24" fill="none" width="18" height="18">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2.5" strokeDasharray="30 70" />
+                      </svg>
+                      Đang gửi…
+                    </>
+                  ) : 'Gửi yêu cầu tư vấn →'}
+                </button>
+              </div>
             </form>
           )}
         </div>
+
       </section>
 
-      {/* Toast */}
       {toast && (
-        <div className="toast" role="alert" aria-live="assertive">
-          {toast}
-        </div>
+        <div className="toast" role="alert" aria-live="assertive">{toast}</div>
       )}
     </>
   );

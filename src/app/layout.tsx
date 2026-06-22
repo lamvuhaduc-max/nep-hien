@@ -29,7 +29,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body spellCheck={false}>{children}</body>
     </html>
   );
 }

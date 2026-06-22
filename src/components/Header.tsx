@@ -8,30 +8,30 @@ type DropItem = { label: string; href: string };
 type NavItem  = { label: string; href: string; dropdown?: DropItem[] };
 
 const NAV: NavItem[] = [
-  { label: 'Giới Thiệu', href: '#about' },
+  { label: 'Giới Thiệu', href: '/gioi-thieu' },
   {
     label: 'Dịch Vụ',
-    href: '#services',
+    href: '/#services',
     dropdown: [
-      { label: 'Thiết kế nội thất',   href: '#services' },
-      { label: 'Thi công trọn gói',   href: '#services' },
-      { label: 'Cải tạo không gian',  href: '#services' },
+      { label: 'Thiết kế nội thất',   href: '/#services' },
+      { label: 'Thi công trọn gói',   href: '/#services' },
+      { label: 'Cải tạo không gian',  href: '/#services' },
     ],
   },
   {
     label: 'Dự Án',
-    href: '#projects',
+    href: '/du-an',
     dropdown: [
-      { label: 'Căn hộ hiện đại',     href: '#projects' },
-      { label: 'Chung cư Indochine',   href: '#projects' },
-      { label: 'Văn phòng tối giản',  href: '#projects' },
-      { label: 'Xem tất cả →',        href: '#projects' },
+      { label: 'Căn hộ hiện đại',     href: '/du-an/can-ho-hien-dai' },
+      { label: 'Chung cư Indochine',  href: '/du-an/chung-cu-indochine' },
+      { label: 'Văn phòng Wabi-Sabi', href: '/du-an/van-phong-wabi-sabi' },
+      { label: 'Xem tất cả →',        href: '/du-an' },
     ],
   },
-  { label: 'Phong Cách', href: '#projects' },
-  { label: 'Báo Giá',    href: '#contact-form' },
-  { label: 'Cẩm Nang',  href: '#about' },
-  { label: 'Liên Hệ',   href: '#about' },
+  { label: 'Phong Cách', href: '/phong-cach' },
+  { label: 'Báo Giá',    href: '/bao-gia' },
+  { label: 'Cẩm Nang',  href: '/#about' },
+  { label: 'Liên Hệ',   href: '/#contact-form' },
 ];
 
 export default function Header() {

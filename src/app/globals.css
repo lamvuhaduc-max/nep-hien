@@ -1862,3 +1862,124 @@ address { font-style: normal; }
   .proj-nav-inner { flex-direction: column; align-items: flex-start; }
   .proj-nav-next { text-align: left; }
 }
+
+/* ===========================================
+   MOBILE RESPONSIVE — toàn diện cho điện thoại
+   =========================================== */
+@media (max-width: 768px) {
+
+  /* ── HEADER centered logo → hamburger ── */
+  .header-inner-center {
+    grid-template-columns: 1fr auto;
+  }
+  .site-nav-left,
+  .site-nav-right-wrap { display: none; }
+  .logo-center { padding: 0 16px; justify-self: start; }
+  .nav-toggle { display: flex; margin-left: auto; }
+
+  /* ── TYPOGRAPHY ── */
+  .heading-xl { font-size: clamp(32px, 9vw, 52px); }
+  .heading-lg  { font-size: clamp(26px, 7vw, 38px); }
+
+  /* ── HERO ── */
+  .hero { height: 100svh; min-height: 580px; }
+  .hero-content { max-width: 100%; padding: 0 20px; }
+  .hero-desc { font-size: 15px; max-width: 100%; }
+  .hero-ctas { flex-direction: column; gap: 12px; }
+  .hero-ctas .btn { width: 100%; justify-content: center; }
+
+  /* ── STATS ── */
+  .stats-inner { flex-wrap: wrap; justify-content: flex-start; }
+  .stat { padding: 12px 24px; min-width: 45%; }
+  .stat-divider:nth-child(4) { display: none; }
+
+  /* ── SERVICES ── */
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { padding: 32px 24px; }
+
+  /* ── SECTION PADDING ── */
+  :root { --section-py: clamp(48px, 8vw, 80px); }
+
+  /* ── PROCESS ── */
+  .process-grid { grid-template-columns: 1fr 1fr; gap: 40px 24px; }
+  .process-connector { display: none; }
+  .process-num { font-size: 40px; }
+
+  /* ── TESTIMONIALS ── */
+  .testi-card { padding: 28px 20px; gap: 16px; }
+  .testi-quote { font-size: 16px; }
+
+  /* ── PARTNERS ── */
+  .partner-logo-wrap { padding: 8px 24px; }
+  .partner-text-name { font-size: 15px; }
+
+  /* ── ABOUT ── */
+  .about-inner { grid-template-columns: 1fr; }
+  .about-brand-panel { padding: 36px 28px; }
+  .about-badge { bottom: -12px; right: 8px; padding: 16px 18px; }
+  .about-badge strong { font-size: 30px; }
+  .about-badges { gap: 16px; }
+
+  /* ── FOOTER ── */
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 32px; }
+  .footer-bottom-inner { flex-direction: column; text-align: center; gap: 6px; }
+
+  /* ── CATALOGUE (gioi-thieu) ── */
+  .cat-intro { padding: 80px 0 48px; }
+  .cat-intro-inner { padding: 0 20px; }
+  .cat-intro-images { height: 260px; }
+  .cat-gallery-header,
+  .gt-gallery-header { padding: 0 20px; }
+  .gt-gallery-grid { padding: 0 20px; gap: 8px; }
+  .cat-section-text { padding: 32px 20px; }
+  .cat-stats-inner { grid-template-columns: 1fr 1fr; }
+  .cat-stat { padding: 28px 20px; }
+  .cat-stat-num { font-size: 38px; }
+  .cat-cta-content { padding: 56px 20px; }
+
+  /* ── PAGE HERO ── */
+  .page-hero { height: 50vh; min-height: 300px; }
+  .page-hero-content { padding-bottom: 36px; }
+  .page-hero-content .heading-xl { font-size: clamp(28px, 8vw, 44px); }
+
+  /* ── PRICING ── */
+  .pricing-grid { grid-template-columns: 1fr; gap: 20px; }
+  .pricing-highlight { transform: none; }
+  .pricing-card { padding: 32px 24px; }
+
+  /* ── FAQ ── */
+  .faq-list { margin-top: 36px; }
+  .faq-q { font-size: 16px; }
+
+  /* ── PHONG CÁCH ── */
+  .styles-grid { gap: 48px; }
+  .style-card { grid-template-columns: 1fr; gap: 0; }
+  .style-card.reverse .style-img { order: 0; }
+  .style-img { min-height: 260px; }
+  .style-info { padding: 24px 0; }
+
+  /* ── QR PAGE ── */
+  .qr-hero { padding: calc(var(--section-py) + 40px) 20px var(--section-py); }
+  .qr-offer-tags { gap: 8px; }
+  .qr-offer-tags span { font-size: 12px; padding: 6px 12px; }
+  .qr-form-wrap { padding: 0 4px; }
+  .qr-form { padding: 28px 20px; }
+  .qr-radio-group { grid-template-columns: 1fr; }
+
+  /* ── WRAP padding ── */
+  .wrap { padding: 0 16px; }
+
+  /* ── PROJ DETAIL ── */
+  .proj-detail-hero { height: 50vh; min-height: 300px; }
+  .proj-detail-hero-content { padding-bottom: 36px; }
+  .proj-info-inner { flex-wrap: wrap; }
+  .proj-info-item { min-width: 44%; padding: 0; }
+}
+
+/* Extra small – dưới 390px */
+@media (max-width: 390px) {
+  .heading-xl { font-size: 28px; }
+  .stat { min-width: 100%; }
+  .process-grid { grid-template-columns: 1fr; }
+  .cat-stats-inner { grid-template-columns: 1fr; }
+}

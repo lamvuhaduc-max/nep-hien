@@ -883,6 +883,133 @@ address { font-style: normal; }
   .about-badge { left: 8px; bottom: -8px; padding: 16px 18px; }
 }
 
+/* =========================================
+   QR FLOAT BUTTON
+   ========================================= */
+.qr-float {
+  position: fixed; bottom: 32px; right: 28px; z-index: 500;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: var(--terra); color: #fff;
+  padding: 12px 14px; border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(192,86,44,.4);
+  transition: transform .25s, box-shadow .25s;
+  text-decoration: none;
+}
+.qr-float:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(192,86,44,.5); }
+.qr-float-icon { line-height: 1; }
+.qr-float-text { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; text-align: center; line-height: 1.3; }
+
+/* =========================================
+   QR ƯU ĐÃI PAGE (/uu-dai)
+   ========================================= */
+.qr-page { background: var(--bg); }
+
+.qr-hero {
+  background: var(--hero-bg);
+  padding: calc(var(--section-py) + 60px) 24px var(--section-py);
+  text-align: center;
+}
+.qr-hero-badge {
+  display: inline-block;
+  background: var(--terra); color: #fff;
+  font-size: 11px; letter-spacing: .2em; font-weight: 700;
+  padding: 6px 18px; border-radius: 20px; margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.qr-hero-title {
+  font-family: var(--serif); font-size: clamp(32px, 5vw, 56px);
+  color: var(--cream); line-height: 1.15; margin-bottom: 16px;
+}
+.qr-hero-title em { color: var(--brass-lt); }
+.qr-hero-sub { font-size: 16px; color: rgba(245,239,224,.65); max-width: 500px; margin: 0 auto 32px; line-height: 1.7; }
+
+.qr-offer-tags {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 10px;
+}
+.qr-offer-tags span {
+  background: rgba(201,169,110,.15); color: var(--brass-lt);
+  border: 1px solid rgba(201,169,110,.25);
+  padding: 7px 16px; border-radius: 20px;
+  font-size: 13px; font-weight: 500;
+}
+
+.qr-form-section { padding: var(--section-py) 24px; }
+.qr-form-wrap { max-width: 640px; margin: 0 auto; }
+.qr-form { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 48px 40px; }
+.qr-form-title { font-family: var(--serif); font-size: 24px; color: var(--text); margin-bottom: 28px; }
+
+/* Radio cards */
+.qr-radio-group { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 8px; }
+.qr-radio-card { cursor: pointer; }
+.qr-radio-card input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.qr-radio-inner {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 14px 12px; border: 1.5px solid var(--line);
+  border-radius: 6px; text-align: center;
+  transition: border-color .2s, background .2s;
+  background: var(--bg-alt);
+}
+.qr-radio-card input:checked + .qr-radio-inner {
+  border-color: var(--terra); background: rgba(192,86,44,.06);
+}
+.qr-radio-label { font-size: 15px; font-weight: 600; color: var(--text); }
+.qr-radio-desc  { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+.qr-submit { width: 100%; justify-content: center; padding: 16px; font-size: 15px; margin-top: 8px; }
+.qr-submit:disabled { opacity: .65; cursor: not-allowed; }
+
+/* Success */
+.qr-success { text-align: center; padding: 40px 20px; }
+.qr-success-icon { font-size: 48px; margin-bottom: 16px; }
+.qr-success h2 { font-family: var(--serif); font-size: 28px; color: var(--text); margin-bottom: 12px; }
+.qr-success p { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 400px; margin: 0 auto 20px; }
+.qr-success-code {
+  display: inline-block; background: var(--bg-alt);
+  border: 2px dashed var(--terra); border-radius: 6px;
+  padding: 16px 28px; font-size: 14px; color: var(--text);
+  letter-spacing: .05em;
+}
+.qr-success-code strong { color: var(--terra); font-size: 18px; display: block; margin-top: 4px; }
+
+/* =========================================
+   QR PRINT PAGE (/qr)
+   ========================================= */
+.qr-print-page {
+  min-height: 100vh; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 40px 24px;
+}
+.qr-print-card {
+  background: var(--cream); border: 2px solid var(--line);
+  border-radius: 12px; padding: 40px 36px;
+  max-width: 360px; width: 100%; text-align: center;
+  box-shadow: 0 20px 60px rgba(31,32,32,.1);
+  display: flex; flex-direction: column; gap: 24px; align-items: center;
+}
+.qr-print-logo img { height: 48px !important; width: auto !important; }
+.qr-print-offer { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.qr-print-badge {
+  background: var(--terra); color: #fff;
+  font-size: 10px; letter-spacing: .2em; font-weight: 700;
+  padding: 4px 14px; border-radius: 20px;
+}
+.qr-print-title { font-family: var(--serif); font-size: 22px; color: var(--text); }
+.qr-print-benefits { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.qr-print-benefits li { font-size: 13px; color: var(--muted); }
+.qr-print-code { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.qr-print-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.qr-print-url {
+  font-size: 13px; font-weight: 700; color: var(--terra);
+  letter-spacing: .05em;
+}
+.qr-print-contact { font-size: 12px; color: var(--muted); line-height: 1.8; }
+
+@media (max-width: 480px) {
+  .qr-radio-group { grid-template-columns: 1fr; }
+  .qr-form { padding: 28px 20px; }
+}
+
 [hidden] { display: none !important; }
 
 /* =========================================

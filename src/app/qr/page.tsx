@@ -1,14 +1,12 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata: Metadata = {
   title: 'QR Ưu Đãi — Nếp Hiên',
   robots: { index: false },
 };
 
-const QR_URL = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=20&color=1F2020&bgcolor=F5EFE0&data=https%3A%2F%2Fnephien.com%2Fuu-dai';
+const QR_URL = '/qr-nephien.png';
 
 export default function QRPage() {
   return (
@@ -41,8 +39,7 @@ export default function QRPage() {
 
         {/* QR Code */}
         <div className="qr-print-code">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={QR_URL}
             alt="QR Code ưu đãi Nếp Hiên"
             width={240} height={240}

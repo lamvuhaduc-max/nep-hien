@@ -941,14 +941,16 @@ address { font-style: normal; }
 
 /* Radio cards */
 .qr-radio-group { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 8px; }
-.qr-radio-card { cursor: pointer; }
+.qr-radio-card { cursor: pointer; height: 100%; }
 .qr-radio-card input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
 .qr-radio-inner {
-  display: flex; flex-direction: column; gap: 4px;
-  padding: 14px 12px; border: 1.5px solid var(--line);
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 16px 10px; border: 1.5px solid var(--line);
   border-radius: 6px; text-align: center;
   transition: border-color .2s, background .2s;
   background: var(--bg-alt);
+  height: 100%; justify-content: center; align-items: center;
+  min-height: 90px;
 }
 .qr-radio-card input:checked + .qr-radio-inner {
   border-color: var(--terra); background: rgba(192,86,44,.06);

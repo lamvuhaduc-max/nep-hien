@@ -132,7 +132,7 @@ export default function UuDaiPage() {
                     {[
                       { value: 'Để ở',      label: '🏠 Để ở',       desc: 'Thiết kế & thi công để sinh sống' },
                       { value: 'Cho thuê',  label: '🔑 Cho thuê',   desc: 'Nội thất tối ưu giá thuê' },
-                      { value: 'Bán lại',   label: '💰 Bán lại',    desc: 'Tăng giá trị căn hộ' },
+                      { value: 'Gửi bán lại', label: '💰 Gửi Bán Lại', desc: 'Tăng giá trị căn hộ' },
                     ].map(opt => (
                       <label key={opt.value} className="qr-radio-card">
                         <input

@@ -29,9 +29,9 @@
   --gold:     #9A7B4F;
   --gold-lt:  #C9A96E;
 
-  --body:    'Jost', system-ui, sans-serif;
-  --serif:   'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --display: 'Bodoni Moda', Georgia, 'Times New Roman', serif;
+  --body:    var(--font-body), system-ui, sans-serif;
+  --serif:   var(--font-serif), Georgia, 'Times New Roman', serif;
+  --display: var(--font-display), Georgia, 'Times New Roman', serif;
 
   --max-w:      1200px;
   --section-py: clamp(64px, 10vw, 120px);

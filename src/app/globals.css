@@ -29,8 +29,9 @@
   --gold:     #9A7B4F;
   --gold-lt:  #C9A96E;
 
-  --body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body:    'Jost', system-ui, sans-serif;
   --serif:   'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --display: 'Bodoni Moda', Georgia, 'Times New Roman', serif;
 
   --max-w:      1200px;
   --section-py: clamp(64px, 10vw, 120px);
@@ -47,8 +48,9 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--body);
+  font-weight: 300;
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.65;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -72,32 +74,35 @@ address { font-style: normal; }
    ========================================= */
 .kicker {
   display: inline-block;
+  font-family: var(--body);
   font-size: 10px;
+  font-weight: 500;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--terra);
-  font-weight: 500;
 }
 
 .heading-xl {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(36px, 5.5vw, 72px);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.05;
+  letter-spacing: 0.04em;
   color: var(--text);
 }
-.heading-xl em { font-style: italic; color: var(--terra); }
+.heading-xl em { font-style: italic; font-weight: 500; color: var(--terra); }
 
 .heading-lg {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(28px, 4vw, 52px);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.1;
+  letter-spacing: 0.03em;
   color: var(--text);
 }
-.heading-lg em { font-style: italic; color: var(--terra); }
+.heading-lg em { font-style: italic; font-weight: 400; color: var(--terra); }
 
-.section-desc { color: var(--muted); max-width: 520px; margin-top: 16px; font-size: 15px; line-height: 1.75; }
+.section-desc { font-family: var(--body); font-weight: 300; color: var(--muted); max-width: 520px; margin-top: 16px; font-size: 15px; line-height: 1.65; }
 
 .section-header { max-width: 560px; margin-bottom: clamp(40px, 6vw, 64px); }
 .section-header .kicker { margin-bottom: 12px; }
@@ -467,7 +472,7 @@ address { font-style: normal; }
 }
 .stats-inner { display: flex; align-items: center; justify-content: center; }
 .stat { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 12px 48px; }
-.stat strong { font-family: var(--serif); font-size: 34px; font-weight: 400; color: var(--terra); line-height: 1; }
+.stat strong { font-family: var(--display); font-size: 34px; font-weight: 700; letter-spacing: 0.02em; color: var(--terra); line-height: 1; }
 .stat span { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .stat-divider { width: 1px; height: 44px; background: var(--line); flex-shrink: 0; }
 
@@ -488,7 +493,7 @@ address { font-style: normal; }
   box-shadow: 0 8px 32px rgba(192,86,44,.08);
 }
 .service-icon { font-size: 20px; color: var(--terra); margin-bottom: 20px; }
-.service-card h3 { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--text); margin-bottom: 12px; }
+.service-card h3 { font-family: var(--serif); font-size: 22px; font-weight: 500; letter-spacing: 0.02em; color: var(--text); margin-bottom: 12px; }
 .service-card p { color: var(--muted); font-size: 14px; line-height: 1.75; }
 
 /* =========================================
@@ -600,8 +605,8 @@ address { font-style: normal; }
 }
 .cf-form { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 0; }
 .cf-form-title {
-  font-family: var(--serif); font-size: 26px; font-weight: 500;
-  color: var(--text); margin-bottom: 6px;
+  font-family: var(--display); font-size: 26px; font-weight: 500;
+  letter-spacing: 0.03em; color: var(--text); margin-bottom: 6px;
 }
 .cf-form-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
 
@@ -735,7 +740,7 @@ address { font-style: normal; }
   padding: 20px 26px; text-align: center; line-height: 1;
   z-index: 2;
 }
-.about-badge strong { display: block; font-family: var(--serif); font-size: 38px; font-weight: 600; }
+.about-badge strong { display: block; font-family: var(--display); font-size: 38px; font-weight: 700; letter-spacing: 0.03em; }
 .about-badge span { font-size: 11px; letter-spacing: .08em; }
 
 /* About mini badges */
@@ -749,8 +754,8 @@ address { font-style: normal; }
 }
 .about-mini-badge:last-child { border-right: none; }
 .about-mini-badge strong {
-  font-family: var(--serif); font-size: 28px; font-weight: 500;
-  color: var(--terra); line-height: 1;
+  font-family: var(--display); font-size: 28px; font-weight: 700;
+  letter-spacing: 0.03em; color: var(--terra); line-height: 1;
 }
 .about-mini-badge span { font-size: 11px; color: var(--muted); letter-spacing: .06em; }
 
@@ -917,8 +922,9 @@ address { font-style: normal; }
   text-transform: uppercase;
 }
 .qr-hero-title {
-  font-family: var(--serif); font-size: clamp(32px, 5vw, 56px);
-  color: var(--cream); line-height: 1.15; margin-bottom: 16px;
+  font-family: var(--display); font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700; letter-spacing: 0.04em;
+  color: var(--cream); line-height: 1.1; margin-bottom: 16px;
 }
 .qr-hero-title em { color: var(--brass-lt); }
 .qr-hero-sub { font-size: 16px; color: rgba(245,239,224,.65); max-width: 500px; margin: 0 auto 32px; line-height: 1.7; }

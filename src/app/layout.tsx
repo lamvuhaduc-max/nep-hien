@@ -1,24 +1,17 @@
 import type { Metadata } from 'next';
-import { Bodoni_Moda, Cormorant_Garamond, Jost } from 'next/font/google';
+import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
 import './globals.css';
 
-const bodoniModa = Bodoni_Moda({
+/* #1 luxury interior pairing 2025 — Cormorant Garamond + DM Sans */
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
+  weight: ['300', '400', '500', '600'],
   style: ['normal', 'italic'],
   variable: '--font-display',
   display: 'swap',
 });
 
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-serif',
-  display: 'swap',
-});
-
-const jost = Jost({
+const dmSans = DM_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],
   variable: '--font-body',
@@ -44,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" className={`${bodoniModa.variable} ${cormorantGaramond.variable} ${jost.variable}`}>
+    <html lang="vi" className={`${cormorantGaramond.variable} ${dmSans.variable}`}>
       <body spellCheck={false}>{children}</body>
     </html>
   );

@@ -133,6 +133,12 @@ export default function ContactForm() {
               <h3 className="cf-form-title">Điền thông tin của bạn</h3>
               <p className="cf-form-sub">Chúng tôi sẽ phản hồi trong vòng 24 giờ</p>
 
+              {/* Honeypot chống bot: người thật không thấy, bot điền vào -> Formspree tự bỏ qua */}
+              <input
+                type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true"
+                style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+              />
+
               {/* Row 1: Tên + SĐT */}
               <div className="cf-row">
                 <div className={`cf-field${errors.name ? ' error' : ''}`}>

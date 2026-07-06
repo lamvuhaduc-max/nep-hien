@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import PrintButton from './PrintButton';
 
 export const metadata: Metadata = {
   title: 'QR Ưu Đãi — Nếp Hiên',
@@ -58,16 +59,7 @@ export default function QRPage() {
 
       {/* Nút in - ẩn khi in thật */}
       <div className="no-print" style={{ textAlign: 'center', marginTop: 32 }}>
-        <button
-          onClick={() => window.print()}
-          style={{
-            padding: '14px 32px', background: '#C0562C', color: '#fff',
-            border: 'none', borderRadius: '3px', fontSize: '14px',
-            letterSpacing: '.08em', cursor: 'pointer', fontWeight: 600,
-          }}
-        >
-          🖨️ In QR Code
-        </button>
+        <PrintButton />
         <p style={{ marginTop: 12, fontSize: 12, color: '#7A7470' }}>
           Dùng để in card, standee, brochure hoặc chia sẻ qua Zalo/Facebook
         </p>

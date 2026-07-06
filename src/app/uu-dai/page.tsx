@@ -82,6 +82,12 @@ export default function UuDaiPage() {
               <form onSubmit={handleSubmit} className="qr-form" noValidate>
                 <h2 className="qr-form-title">Thông tin đăng ký ưu đãi</h2>
 
+                {/* Honeypot chống bot: người thật không thấy, bot điền vào -> Formspree tự bỏ qua */}
+                <input
+                  type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true"
+                  style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+                />
+
                 {/* Tên chủ nhà */}
                 <div className={`cf-field${errors.owner_name ? ' error' : ''}`}>
                   <label htmlFor="owner_name">Tên chủ nhà *</label>

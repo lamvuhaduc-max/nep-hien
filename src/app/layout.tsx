@@ -1,19 +1,20 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
+import { Playfair_Display, Raleway } from 'next/font/google';
 import './globals.css';
 
-/* #1 luxury interior pairing 2025 — Cormorant Garamond + DM Sans */
-const cormorantGaramond = Cormorant_Garamond({
+/* Italian Luxury style — Playfair Display + Raleway */
+const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
   variable: '--font-display',
   display: 'swap',
 });
 
-const dmSans = DM_Sans({
+const raleway = Raleway({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
   variable: '--font-body',
   display: 'swap',
 });
@@ -37,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="vi" className={`${cormorantGaramond.variable} ${dmSans.variable}`}>
+    <html lang="vi" className={`${playfairDisplay.variable} ${raleway.variable}`}>
       <body spellCheck={false}>{children}</body>
     </html>
   );

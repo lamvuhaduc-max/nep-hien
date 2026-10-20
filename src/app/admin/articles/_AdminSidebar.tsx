@@ -118,11 +118,15 @@ export function AdminSidebar({
           {renderMucMenu('danh_muc', 'Quản lý danh mục', FolderKanban, soDanhMuc)}
           {renderMucMenu('tu_van', 'Yêu cầu tư vấn', MessageSquareText, soTuVan)}
 
-          <div className="nh-sidebar-section-label" style={{ marginTop: '1.15rem' }}>
-            Hệ thống &amp; Bảo mật
-          </div>
-          {renderMucMenu('tai_khoan', 'Quản trị tài khoản', Users, soTaiKhoan)}
-          {renderMucMenu('nhat_ky', 'Nhật ký hệ thống', History)}
+          {nguoiDung?.vaiTro === 'super_admin' && (
+            <>
+              <div className="nh-sidebar-section-label" style={{ marginTop: '1.15rem' }}>
+                Hệ thống &amp; Bảo mật
+              </div>
+              {renderMucMenu('tai_khoan', 'Quản trị tài khoản', Users, soTaiKhoan)}
+              {renderMucMenu('nhat_ky', 'Nhật ký hệ thống', History)}
+            </>
+          )}
 
           <div className="nh-sidebar-section-label" style={{ marginTop: '1.15rem' }}>
             Liên kết nhanh
@@ -147,14 +151,22 @@ export function AdminSidebar({
         {nguoiDung && (
           <div
             className="nh-sidebar-user"
+            style={{
+              cursor: nguoiDung.vaiTro === 'super_admin' ? 'pointer' : 'default',
+            }}
             onClick={() => {
+              if (nguoiDung.vaiTro !== 'super_admin') return;
               if (onChonTab) {
                 onChonTab('tai_khoan');
               } else {
                 window.location.href = '/admin/articles?tab=tai_khoan';
               }
             }}
-            title="Bấm để mở Quản trị Tài khoản"
+            title={
+              nguoiDung.vaiTro === 'super_admin'
+                ? 'Bấm để mở Quản trị Tài khoản'
+                : `${nguoiDung.hoTen} (${nguoiDung.taiKhoan})`
+            }
           >
             <div className="nh-sidebar-avatar">
               <ShieldCheck size={16} />
@@ -183,3 +195,4 @@ export function AdminSidebar({
     </aside>
   );
 }
+

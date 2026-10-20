@@ -239,14 +239,27 @@ export function QuanLyBaiViet() {
   }, [taiPhienHienTai, taiDanhMuc, taiThongKeTuVan, taiTaiKhoan]);
 
   useEffect(() => {
+    if (
+      nguoiDungHienTai &&
+      nguoiDungHienTai.vaiTro !== 'super_admin' &&
+      (tabChinh === 'tai_khoan' || tabChinh === 'nhat_ky')
+    ) {
+      setTabChinh('bai_viet');
+      if (typeof window !== 'undefined') {
+        window.history.replaceState(null, '', '/admin/articles');
+      }
+    }
+  }, [nguoiDungHienTai, tabChinh]);
+
+  useEffect(() => {
     taiBaiViet();
   }, [taiBaiViet]);
 
   useEffect(() => {
-    if (tabChinh === 'nhat_ky') {
+    if (tabChinh === 'nhat_ky' && nguoiDungHienTai?.vaiTro === 'super_admin') {
       taiNhatKy();
     }
-  }, [tabChinh, taiNhatKy]);
+  }, [tabChinh, nguoiDungHienTai, taiNhatKy]);
 
   async function doiTrangThaiNhanh(bv: TomTatBaiVietDto, trangThaiMoi: TrangThaiBaiViet) {
     setThongBao(null);

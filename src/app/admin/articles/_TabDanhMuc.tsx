@@ -10,6 +10,7 @@ interface Props {
 }
 
 export function TabDanhMuc({ danhMuc, onDaThayDoi }: Props) {
+  const [moFormTao, setMoFormTao] = useState(false);
   const [tenMoi, setTenMoi] = useState('');
   const [slugMoi, setSlugMoi] = useState('');
   const [moTaMoi, setMoTaMoi] = useState('');
@@ -49,6 +50,7 @@ export function TabDanhMuc({ danhMuc, onDaThayDoi }: Props) {
         setSlugMoi('');
         setMoTaMoi('');
         setThuTuMoi(danhMuc.length + 2);
+        setMoFormTao(false);
         setThongBao({ loai: 'ok', chu: `Đã thêm danh mục "${data.ten}".` });
         onDaThayDoi();
       }
@@ -138,128 +140,203 @@ export function TabDanhMuc({ danhMuc, onDaThayDoi }: Props) {
   }
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '380px minmax(0, 1fr)', gap: '1.5rem' }}>
-      {/* Cột trái: Form thêm danh mục mới */}
-      <form onSubmit={xuLyTaoDanhMuc} className="nh-card" style={{ padding: '1.35rem' }}>
-        <h3
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '1.25rem',
-            margin: '0 0 0.35rem',
-          }}
-        >
-          Thêm danh mục mới
-        </h3>
-        <p style={{ fontSize: '0.8rem', color: '#6b5e52', margin: '0 0 1.1rem' }}>
-          Phân loại bài viết theo chủ đề kiến trúc, nội thất hoặc chính sách.
-        </p>
-
-        <div style={{ marginBottom: '0.85rem' }}>
-          <label
-            htmlFor="dm-ten-moi"
-            style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
-          >
-            Tên danh mục *
-          </label>
-          <input
-            id="dm-ten-moi"
-            type="text"
-            required
-            className="nh-input"
-            placeholder="VD: Kiến trúc Xanh & Vi khí hậu"
-            value={tenMoi}
-            onChange={(e) => {
-              setTenMoi(e.target.value);
-              setSlugMoi(taoSlug(e.target.value));
-            }}
-          />
-        </div>
-
-        <div style={{ marginBottom: '0.85rem' }}>
-          <label
-            htmlFor="dm-slug-moi"
-            style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
-          >
-            Đường dẫn tĩnh (slug)
-          </label>
-          <input
-            id="dm-slug-moi"
-            type="text"
-            className="nh-input"
-            placeholder="kien-truc-xanh-va-vi-khi-hau"
-            value={slugMoi}
-            onChange={(e) => setSlugMoi(e.target.value)}
-          />
-        </div>
-
-        <div style={{ marginBottom: '0.85rem' }}>
-          <label
-            htmlFor="dm-mota-moi"
-            style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
-          >
-            Mô tả chuyên mục
-          </label>
-          <textarea
-            id="dm-mota-moi"
-            rows={3}
-            className="nh-textarea"
-            placeholder="Giới thiệu ngắn về nội dung chuyên mục..."
-            value={moTaMoi}
-            onChange={(e) => setMoTaMoi(e.target.value)}
-          />
-        </div>
-
-        <div style={{ marginBottom: '1.1rem' }}>
-          <label
-            htmlFor="dm-thutu-moi"
-            style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
-          >
-            Thứ tự hiển thị
-          </label>
-          <input
-            id="dm-thutu-moi"
-            type="number"
-            className="nh-input"
-            value={thuTuMoi}
-            onChange={(e) => setThuTuMoi(Number(e.target.value) || 0)}
-          />
-        </div>
-
-        <button type="submit" disabled={dangTao} className="nh-btn nh-btn-primary" style={{ width: '100%' }}>
-          {dangTao ? 'Đang lưu...' : '+ Thêm danh mục'}
-        </button>
-      </form>
-
-      {/* Cột phải: Bảng danh mục hiện có */}
-      <div className="nh-card" style={{ padding: '1.35rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      {thongBao && (
         <div
+          role="status"
           style={{
+            padding: '0.85rem 1.15rem',
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            background: thongBao.loai === 'ok' ? '#e6f4ea' : '#fce8e6',
+            color: thongBao.loai === 'ok' ? '#137333' : '#c5221f',
+            border: `1px solid ${thongBao.loai === 'ok' ? '#b7e1cd' : '#f6aea9'}`,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+          }}
+        >
+          <span>{thongBao.chu}</span>
+          <button
+            type="button"
+            onClick={() => setThongBao(null)}
+            style={{ background: 'none', border: 'none', fontWeight: 700, cursor: 'pointer' }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      {/* Khung thêm danh mục mới (chỉ hiện khi bấm nút "+ Thêm danh mục mới") */}
+      {moFormTao && (
+        <form
+          onSubmit={xuLyTaoDanhMuc}
+          className="nh-card"
+          style={{
+            padding: '1.35rem',
+            borderLeft: '4px solid #c0562c',
+            background: '#fdfbf7',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              gap: '1rem',
+              marginBottom: '1rem',
+            }}
+          >
+            <div>
+              <h3
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '1.25rem',
+                  margin: '0 0 0.25rem',
+                }}
+              >
+                Thêm danh mục mới
+              </h3>
+              <p style={{ fontSize: '0.8rem', color: '#6b5e52', margin: 0 }}>
+                Phân loại bài viết theo chủ đề kiến trúc, nội thất hoặc chính sách.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMoFormTao(false)}
+              className="nh-btn nh-btn-ghost"
+            >
+              Đóng ✕
+            </button>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: '0.9rem',
+              marginBottom: '0.9rem',
+            }}
+          >
+            <div>
+              <label
+                htmlFor="dm-ten-moi"
+                style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
+              >
+                Tên danh mục *
+              </label>
+              <input
+                id="dm-ten-moi"
+                type="text"
+                required
+                className="nh-input"
+                placeholder="VD: Kiến trúc Xanh & Vi khí hậu"
+                value={tenMoi}
+                onChange={(e) => {
+                  setTenMoi(e.target.value);
+                  setSlugMoi(taoSlug(e.target.value));
+                }}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="dm-slug-moi"
+                style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
+              >
+                Đường dẫn tĩnh (slug)
+              </label>
+              <input
+                id="dm-slug-moi"
+                type="text"
+                className="nh-input"
+                placeholder="kien-truc-xanh-va-vi-khi-hau"
+                value={slugMoi}
+                onChange={(e) => setSlugMoi(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="dm-thutu-moi"
+                style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
+              >
+                Thứ tự hiển thị
+              </label>
+              <input
+                id="dm-thutu-moi"
+                type="number"
+                className="nh-input"
+                value={thuTuMoi}
+                onChange={(e) => setThuTuMoi(Number(e.target.value) || 0)}
+              />
+            </div>
+          </div>
+
+          <div style={{ marginBottom: '1.1rem' }}>
+            <label
+              htmlFor="dm-mota-moi"
+              style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: 4 }}
+            >
+              Mô tả chuyên mục
+            </label>
+            <textarea
+              id="dm-mota-moi"
+              rows={2}
+              className="nh-textarea"
+              placeholder="Giới thiệu ngắn về nội dung chuyên mục..."
+              value={moTaMoi}
+              onChange={(e) => setMoTaMoi(e.target.value)}
+            />
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.6rem' }}>
+            <button
+              type="button"
+              onClick={() => setMoFormTao(false)}
+              className="nh-btn nh-btn-ghost"
+            >
+              Hủy
+            </button>
+            <button type="submit" disabled={dangTao} className="nh-btn nh-btn-primary">
+              {dangTao ? 'Đang lưu...' : '+ Thêm danh mục'}
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* Bảng danh mục hiện có (Toàn chiều ngang) */}
+      <div className="nh-card" style={{ padding: '1.35rem', overflowX: 'auto' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '0.75rem',
             marginBottom: '1rem',
           }}
         >
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', margin: 0 }}>
-            Danh sách danh mục ({danhMuc.length})
-          </h3>
-        </div>
-
-        {thongBao && (
-          <div
-            role="status"
-            style={{
-              padding: '0.75rem 1rem',
-              marginBottom: '1rem',
-              fontSize: '0.84rem',
-              background: thongBao.loai === 'ok' ? '#e6f4ea' : '#fce8e6',
-              color: thongBao.loai === 'ok' ? '#137333' : '#c5221f',
-              border: `1px solid ${thongBao.loai === 'ok' ? '#b7e1cd' : '#f6aea9'}`,
-            }}
-          >
-            {thongBao.chu}
+          <div>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', margin: 0 }}>
+              Danh sách danh mục ({danhMuc.length})
+            </h3>
+            <p style={{ fontSize: '0.8rem', color: '#6b5e52', margin: '0.2rem 0 0' }}>
+              Bấm vào trạng thái <strong>Đang hiện / Đang ẩn</strong> để bật tắt nhanh chuyên mục ngoài trang công khai.
+            </p>
           </div>
-        )}
+
+          <button
+            type="button"
+            onClick={() => {
+              setThuTuMoi(danhMuc.length + 1);
+              setMoFormTao((prev) => !prev);
+            }}
+            className={`nh-btn ${moFormTao ? 'nh-btn-ghost' : 'nh-btn-primary'}`}
+          >
+            {moFormTao ? '✕ Đóng khung thêm mới' : '+ Thêm danh mục mới'}
+          </button>
+        </div>
 
         <table className="nh-table">
           <thead>

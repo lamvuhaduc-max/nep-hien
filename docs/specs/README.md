@@ -9,6 +9,7 @@ Thư mục này chứa toàn bộ tài liệu đặc tả miền nghiệp vụ (
 | Mã miền | Tên miền | Tài liệu | Trạng thái |
 | :--- | :--- | :--- | :--- |
 | `DOM-CONTENT` | Nội dung mặt tiền & Quản lý bài viết (Blog / Cẩm nang / Chính sách) | [content-article-domain.md](./domains/content-article-domain.md) | Active |
+| `DOM-CONSULTATION` | Tiếp nhận & Quản trị Yêu cầu Tư vấn Khách hàng (`/#contact-form` & `/uu-dai`) | [customer-consultation-domain.md](./domains/customer-consultation-domain.md) | Active |
 
 ---
 
@@ -17,3 +18,5 @@ Thư mục này chứa toàn bộ tài liệu đặc tả miền nghiệp vụ (
 | Mã tính năng | Tên tính năng | PRD | RFC | Spec | Tasks |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `FEAT-BAI-VIET` | Quản lý bài viết, Danh mục, Soi SEO & Trang đọc bài công khai | [PRD](./features/chung/bai-viet/bai-viet-prd.md) | [RFC](./features/chung/bai-viet/bai-viet-rfc.md) | [Spec](./features/chung/bai-viet/bai-viet-spec.md) | [Tasks](./features/chung/bai-viet/bai-viet-tasks.md) |
+| `FEAT-YEU-CAU-TU-VAN` | Tiếp nhận & Quản trị Yêu cầu Tư vấn Khách hàng (`/admin/articles?tab=tu_van`) | [PRD](./features/chung/yeu-cau-tu-van/yeu-cau-tu-van-prd.md) | [RFC](./features/chung/yeu-cau-tu-van/yeu-cau-tu-van-rfc.md) | [Spec](./features/chung/yeu-cau-tu-van/yeu-cau-tu-van-spec.md) | [Tasks](./features/chung/yeu-cau-tu-van/yeu-cau-tu-van-tasks.md) |
+

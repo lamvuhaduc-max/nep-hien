@@ -82,6 +82,23 @@ erDiagram
         jsonb chi_tiet
         timestamptz ngay_tao
     }
+
+    YEU_CAU_TU_VAN {
+        bigserial id PK
+        varchar_140 ho_ten
+        varchar_30 so_dien_thoai
+        varchar_160 email
+        varchar_120 dich_vu
+        varchar_160 dien_tich
+        text loi_nhan
+        varchar_40 nguon "CHECK IN ('form_trang_chu', 'form_qr_uu_dai', 'khac')"
+        varchar_60 ma_uu_dai
+        varchar_30 trang_thai "CHECK IN ('moi', 'dang_lien_he', 'da_hen_lich', 'hoan_thanh', 'huy')"
+        text ghi_chu_noi_bo
+        varchar_120 nguoi_phu_trach
+        timestamptz ngay_tao
+        timestamptz ngay_cap_nhat
+    }
 ```
 
 ---
@@ -105,7 +122,13 @@ Bảng trung tâm lưu trữ bài viết kiến trúc & nội thất của Nếp
 Lưu trữ ảnh tải lên từ trình soạn thảo quản trị (`bytea` + metadata) và phục vụ qua route `/anh/[name]` với header `Cache-Control: public, max-age=31536000, immutable`. Thiết kế lưu trữ trong Neon PostgreSQL giúp ảnh tải lên bền vững tuyệt đối trên môi trường serverless/container mà không bị mất khi redeploy.
 
 ### 3.4. Bảng `nhat_ky_bai_viet`
-Lưu vết mọi thao tác quản trị (`bai_viet.tao`, `bai_viet.sua`, `bai_viet.doi_trang_thai`, `bai_viet.xoa`, `bai_viet.khoi_phuc`, `danh_muc_bai_viet.*`) phục vụ kiểm toán và tra cứu lịch sử biên tập.
+Lưu vết mọi thao tác quản trị (`bai_viet.*`, `danh_muc_bai_viet.*`, `yeu_cau_tu_van.*`, `tai_khoan.*`, `he_thong.*`) phục vụ kiểm toán và tra cứu lịch sử biên tập & xử lý khách hàng.
+
+### 3.5. Bảng `yeu_cau_tu_van`
+Lưu trữ toàn bộ yêu cầu tư vấn thiết kế & thi công nội thất do khách hàng gửi từ **Form Tư vấn miễn phí trên Trang chủ (`/#contact-form`)** và **Form Đăng ký QR Ưu đãi 10% (`/uu-dai`)**.
+
+* **Phân loại nguồn (`nguon`):** Ràng buộc `chk_yctv_nguon CHECK (nguon IN ('form_trang_chu', 'form_qr_uu_dai', 'khac'))` kết hợp cột `ma_uu_dai` (mặc định `'NEPHIEN-QR-2026'` với nguồn QR) giúp phân biệt rõ khách hàng từ từng chiến dịch.
+* **Quản lý tiến độ tư vấn (`trang_thai`, `nguoi_phu_trach`, `ghi_chu_noi_bo`):** Hỗ trợ vòng đời 5 trạng thái (`'moi'`, `'dang_lien_he'`, `'da_hen_lich'`, `'hoan_thanh'`, `'huy'`), gán Kiến trúc sư phụ trách và lưu ghi chú khảo sát nội bộ ngay trên trang quản trị `/admin/articles?tab=tu_van`.
 
 ---
 
@@ -125,3 +148,11 @@ Lưu vết mọi thao tác quản trị (`bai_viet.tao`, `bai_viet.sua`, `bai_vi
      ON bai_viet (xoa_luc, trang_thai, ngay_cap_nhat DESC);
    ```
    Phục vụ trang `/admin/articles` khi lọc theo tab trạng thái (`Tất cả`, `Bản nháp`, `Đã đăng`, `Đang ẩn`, `Thùng rác`) và sắp xếp theo thời gian cập nhật.
+
+3. **`idx_yctv_quan_tri`:**
+   ```sql
+   CREATE INDEX idx_yctv_quan_tri
+     ON yeu_cau_tu_van (trang_thai, ngay_tao DESC);
+   ```
+   Tối ưu hóa cho màn hình quản trị `/admin/articles?tab=tu_van` khi thống kê theo trạng thái và ưu tiên hiển thị các yêu cầu `'moi'` vừa gửi lên.
+

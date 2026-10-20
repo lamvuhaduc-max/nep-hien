@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS anh_bai_viet (
   ngay_tao    timestamptz NOT NULL DEFAULT now()
 );
 
--- 5. Bảng nhật ký hoạt động (bài viết, danh mục, tài khoản, đăng nhập)
+-- 5. Bảng nhật ký hoạt động (bài viết, danh mục, tài khoản, đăng nhập, yêu cầu tư vấn)
 CREATE TABLE IF NOT EXISTS nhat_ky_bai_viet (
   id                   bigserial PRIMARY KEY,
   hanh_dong            varchar(60) NOT NULL,
@@ -81,3 +81,27 @@ CREATE TABLE IF NOT EXISTS nhat_ky_bai_viet (
 );
 
 CREATE INDEX IF NOT EXISTS idx_nkbv_ngay_tao ON nhat_ky_bai_viet (ngay_tao DESC);
+
+-- 6. Bảng yêu cầu tư vấn khách hàng (từ form trang chủ /#contact-form & trang QR ưu đãi /uu-dai)
+CREATE TABLE IF NOT EXISTS yeu_cau_tu_van (
+  id               bigserial PRIMARY KEY,
+  ho_ten           varchar(140) NOT NULL,
+  so_dien_thoai    varchar(30) NOT NULL,
+  email            varchar(160) NOT NULL DEFAULT '',
+  dich_vu          varchar(120) NOT NULL DEFAULT '',
+  dien_tich        varchar(160) NOT NULL DEFAULT '',
+  loi_nhan         text NOT NULL DEFAULT '',
+  nguon            varchar(40) NOT NULL DEFAULT 'form_trang_chu',
+  ma_uu_dai        varchar(60) NOT NULL DEFAULT '',
+  trang_thai       varchar(30) NOT NULL DEFAULT 'moi',
+  ghi_chu_noi_bo   text NOT NULL DEFAULT '',
+  nguoi_phu_trach  varchar(120) NOT NULL DEFAULT '',
+  ngay_tao         timestamptz NOT NULL DEFAULT now(),
+  ngay_cap_nhat    timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT chk_yctv_nguon CHECK (nguon IN ('form_trang_chu', 'form_qr_uu_dai', 'khac')),
+  CONSTRAINT chk_yctv_trang_thai CHECK (trang_thai IN ('moi', 'dang_lien_he', 'da_hen_lich', 'hoan_thanh', 'huy'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_yctv_quan_tri
+  ON yeu_cau_tu_van (trang_thai, ngay_tao DESC);
+

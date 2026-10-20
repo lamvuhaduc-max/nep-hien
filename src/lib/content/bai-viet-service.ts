@@ -1459,3 +1459,452 @@ export async function layAnhBaiViet(
     duLieu: Buffer.from(row.du_lieu as Uint8Array),
   };
 }
+
+// ============================================================================
+// YÊU CẦU TƯ VẤN KHÁCH HÀNG (FORM TRANG CHỦ & FORM QR ƯU ĐÃI)
+// ============================================================================
+
+export type NguonYeuCauTuVan = 'form_trang_chu' | 'form_qr_uu_dai' | 'khac';
+
+export type TrangThaiYeuCauTuVan =
+  | 'moi'
+  | 'dang_lien_he'
+  | 'da_hen_lich'
+  | 'hoan_thanh'
+  | 'huy';
+
+export interface YeuCauTuVanDto {
+  id: number;
+  hoTen: string;
+  soDienThoai: string;
+  email: string;
+  dichVu: string;
+  dienTich: string;
+  loiNhan: string;
+  nguon: NguonYeuCauTuVan;
+  maUuDai: string;
+  trangThai: TrangThaiYeuCauTuVan;
+  ghiChuNoiBo: string;
+  nguoiPhuTrach: string;
+  ngayTao: string;
+  ngayCapNhat: string;
+}
+
+export interface ThongKeYeuCauTuVanDto {
+  tatCa: number;
+  moi: number;
+  dangLienHe: number;
+  daHenLich: number;
+  hoanThanh: number;
+  huy: number;
+}
+
+let huaDamBaoBangTuVan: Promise<void> | null = null;
+
+async function damBaoBangYeuCauTuVan(): Promise<void> {
+  if (huaDamBaoBangTuVan) return huaDamBaoBangTuVan;
+  huaDamBaoBangTuVan = (async () => {
+    try {
+      await sql`
+        CREATE TABLE IF NOT EXISTS yeu_cau_tu_van (
+          id               bigserial PRIMARY KEY,
+          ho_ten           varchar(140) NOT NULL,
+          so_dien_thoai    varchar(30) NOT NULL,
+          email            varchar(160) NOT NULL DEFAULT '',
+          dich_vu          varchar(120) NOT NULL DEFAULT '',
+          dien_tich        varchar(160) NOT NULL DEFAULT '',
+          loi_nhan         text NOT NULL DEFAULT '',
+          nguon            varchar(40) NOT NULL DEFAULT 'form_trang_chu',
+          ma_uu_dai        varchar(60) NOT NULL DEFAULT '',
+          trang_thai       varchar(30) NOT NULL DEFAULT 'moi',
+          ghi_chu_noi_bo   text NOT NULL DEFAULT '',
+          nguoi_phu_trach  varchar(120) NOT NULL DEFAULT '',
+          ngay_tao         timestamptz NOT NULL DEFAULT now(),
+          ngay_cap_nhat    timestamptz NOT NULL DEFAULT now(),
+          CONSTRAINT chk_yctv_nguon CHECK (nguon IN ('form_trang_chu', 'form_qr_uu_dai', 'khac')),
+          CONSTRAINT chk_yctv_trang_thai CHECK (trang_thai IN ('moi', 'dang_lien_he', 'da_hen_lich', 'hoan_thanh', 'huy'))
+        )
+      `;
+      await sql`
+        CREATE INDEX IF NOT EXISTS idx_yctv_quan_tri
+          ON yeu_cau_tu_van (trang_thai, ngay_tao DESC)
+      `;
+
+      const [dem] = await sql`SELECT COUNT(*)::int AS c FROM yeu_cau_tu_van`;
+      const [daCoLog] = await sql`
+        SELECT COUNT(*)::int AS c FROM nhat_ky_bai_viet WHERE hanh_dong LIKE 'yeu_cau_tu_van.%'
+      `;
+      if (Number(dem?.c ?? 0) === 0 && Number(daCoLog?.c ?? 0) === 0) {
+        await sql`
+          INSERT INTO yeu_cau_tu_van (
+            ho_ten,
+            so_dien_thoai,
+            email,
+            dich_vu,
+            dien_tich,
+            loi_nhan,
+            nguon,
+            ma_uu_dai,
+            trang_thai,
+            ghi_chu_noi_bo,
+            nguoi_phu_trach
+          )
+          VALUES
+            (
+              'Trần Minh Quân',
+              '0909888123',
+              'minhquan.tran@gmail.com',
+              'Thiết kế & Thi công trọn gói',
+              '100 – 200m²',
+              'Gia đình mình chuẩn bị nhận bàn giao căn hộ Duplex 145m² tại Thảo Điền. Mong muốn phong cách Indochine đương đại kết hợp gỗ sồi tự nhiên và mây đan.',
+              'form_trang_chu',
+              '',
+              'moi',
+              'Khách hàng tiềm năng cần KTS trưởng tư vấn mặt bằng công năng.',
+              'KTS. Lâm Vũ'
+            ),
+            (
+              'Lê Ngọc Bảo Trân',
+              '0912345678',
+              'baotran.le@outlook.com',
+              'Để ở',
+              'Căn A2-15 · Empire City Thủ Thiêm (98m²)',
+              'Mình quét mã QR tại sự kiện. Cần khảo sát hiện trạng vào sáng thứ Bảy tuần này và tư vấn gói thiết kế Wabi-Sabi tối giản.',
+              'form_qr_uu_dai',
+              'NEPHIEN-QR-2026',
+              'da_hen_lich',
+              'Đã gọi xác nhận ưu đãi 10% phí thiết kế, hẹn 9h30 sáng Thứ 7 tại sảnh Tilia.',
+              'KTS. Minh Hiên'
+            )
+        `;
+      }
+    } catch (err) {
+      huaDamBaoBangTuVan = null;
+      throw err;
+    }
+  })();
+  return huaDamBaoBangTuVan;
+}
+
+function mapYeuCauTuVan(r: Record<string, unknown>): YeuCauTuVanDto {
+  const nguonRaw = String(r.nguon ?? 'form_trang_chu');
+  const nguon: NguonYeuCauTuVan =
+    nguonRaw === 'form_qr_uu_dai'
+      ? 'form_qr_uu_dai'
+      : nguonRaw === 'khac'
+        ? 'khac'
+        : 'form_trang_chu';
+
+  const ttRaw = String(r.trang_thai ?? 'moi');
+  const trangThai: TrangThaiYeuCauTuVan =
+    ttRaw === 'dang_lien_he' ||
+    ttRaw === 'da_hen_lich' ||
+    ttRaw === 'hoan_thanh' ||
+    ttRaw === 'huy'
+      ? ttRaw
+      : 'moi';
+
+  return {
+    id: Number(r.id),
+    hoTen: String(r.ho_ten ?? ''),
+    soDienThoai: String(r.so_dien_thoai ?? ''),
+    email: String(r.email ?? ''),
+    dichVu: String(r.dich_vu ?? ''),
+    dienTich: String(r.dien_tich ?? ''),
+    loiNhan: String(r.loi_nhan ?? ''),
+    nguon,
+    maUuDai: String(r.ma_uu_dai ?? ''),
+    trangThai,
+    ghiChuNoiBo: String(r.ghi_chu_noi_bo ?? ''),
+    nguoiPhuTrach: String(r.nguoi_phu_trach ?? ''),
+    ngayTao: isoHoacNull(r.ngay_tao) ?? new Date().toISOString(),
+    ngayCapNhat: isoHoacNull(r.ngay_cap_nhat) ?? new Date().toISOString(),
+  };
+}
+
+const REGEX_SDT_VN = /^(\+?84|0)[35789]\d{8}$/;
+
+export async function taoYeuCauTuVanCongKhai(dauVao: {
+  hoTen: string;
+  soDienThoai: string;
+  email?: string;
+  dichVu?: string;
+  dienTich?: string;
+  loiNhan?: string;
+  nguon?: NguonYeuCauTuVan;
+  maUuDai?: string;
+  gotcha?: string;
+}): Promise<YeuCauTuVanDto> {
+  await damBaoBangYeuCauTuVan();
+
+  // Nếu bot tự điền honeypot _gotcha -> trả về giả lập thành công mà không ghi rác vào DB
+  if (dauVao.gotcha && dauVao.gotcha.trim() !== '') {
+    return {
+      id: 0,
+      hoTen: dauVao.hoTen ?? '',
+      soDienThoai: dauVao.soDienThoai ?? '',
+      email: '',
+      dichVu: '',
+      dienTich: '',
+      loiNhan: '',
+      nguon: 'form_trang_chu',
+      maUuDai: '',
+      trangThai: 'moi',
+      ghiChuNoiBo: '',
+      nguoiPhuTrach: '',
+      ngayTao: new Date().toISOString(),
+      ngayCapNhat: new Date().toISOString(),
+    };
+  }
+
+  const hoTen = (dauVao.hoTen ?? '').trim().slice(0, 140);
+  if (!hoTen || hoTen.length < 2) {
+    throw new LoiNghiepVu('Vui lòng nhập họ và tên hợp lệ (tối thiểu 2 ký tự).', 400);
+  }
+
+  const sdtSach = (dauVao.soDienThoai ?? '').replace(/[\s.\-()]/g, '');
+  if (!sdtSach || !REGEX_SDT_VN.test(sdtSach)) {
+    throw new LoiNghiepVu('Số điện thoại không hợp lệ (VD: 0901 234 567).', 400);
+  }
+
+  const email = (dauVao.email ?? '').trim().slice(0, 160);
+  const dichVu = (dauVao.dichVu ?? '').trim().slice(0, 120);
+  const dienTich = (dauVao.dienTich ?? '').trim().slice(0, 160);
+  const loiNhan = (dauVao.loiNhan ?? '').trim().slice(0, 2000);
+  const nguon: NguonYeuCauTuVan =
+    dauVao.nguon === 'form_qr_uu_dai'
+      ? 'form_qr_uu_dai'
+      : dauVao.nguon === 'khac'
+        ? 'khac'
+        : 'form_trang_chu';
+  const maUuDai =
+    (dauVao.maUuDai ?? '').trim().slice(0, 60) ||
+    (nguon === 'form_qr_uu_dai' ? 'NEPHIEN-QR-2026' : '');
+
+  const [moi] = await sql`
+    INSERT INTO yeu_cau_tu_van (
+      ho_ten,
+      so_dien_thoai,
+      email,
+      dich_vu,
+      dien_tich,
+      loi_nhan,
+      nguon,
+      ma_uu_dai,
+      trang_thai
+    ) VALUES (
+      ${hoTen},
+      ${sdtSach},
+      ${email},
+      ${dichVu},
+      ${dienTich},
+      ${loiNhan},
+      ${nguon},
+      ${maUuDai},
+      'moi'
+    )
+    RETURNING *
+  `;
+
+  const dto = mapYeuCauTuVan(moi);
+  await ghiNhatKy(
+    'yeu_cau_tu_van.tiep_nhan',
+    dto.id,
+    {
+      hoTen: dto.hoTen,
+      soDienThoai: dto.soDienThoai,
+      dichVu: dto.dichVu,
+      nguon: dto.nguon,
+    },
+    null,
+  );
+
+  return dto;
+}
+
+export async function layThongKeYeuCauTuVanAdmin(): Promise<ThongKeYeuCauTuVanDto> {
+  await damBaoBangYeuCauTuVan();
+  const [row] = await sql`
+    SELECT
+      COUNT(*)::int AS tat_ca,
+      COUNT(*) FILTER (WHERE trang_thai = 'moi')::int AS moi,
+      COUNT(*) FILTER (WHERE trang_thai = 'dang_lien_he')::int AS dang_lien_he,
+      COUNT(*) FILTER (WHERE trang_thai = 'da_hen_lich')::int AS da_hen_lich,
+      COUNT(*) FILTER (WHERE trang_thai = 'hoan_thanh')::int AS hoan_thanh,
+      COUNT(*) FILTER (WHERE trang_thai = 'huy')::int AS huy
+    FROM yeu_cau_tu_van
+  `;
+  return {
+    tatCa: Number(row?.tat_ca ?? 0),
+    moi: Number(row?.moi ?? 0),
+    dangLienHe: Number(row?.dang_lien_he ?? 0),
+    daHenLich: Number(row?.da_hen_lich ?? 0),
+    hoanThanh: Number(row?.hoan_thanh ?? 0),
+    huy: Number(row?.huy ?? 0),
+  };
+}
+
+export async function layDanhSachYeuCauTuVanAdmin(thamSo?: {
+  tuKhoa?: string;
+  trangThai?: TrangThaiYeuCauTuVan;
+  nguon?: NguonYeuCauTuVan;
+  trang?: number;
+  kichThuoc?: number;
+}): Promise<{
+  items: YeuCauTuVanDto[];
+  tong: number;
+  trang: number;
+  kichThuoc: number;
+  thongKe: ThongKeYeuCauTuVanDto;
+}> {
+  await damBaoBangYeuCauTuVan();
+
+  const trang = Math.max(1, Number(thamSo?.trang) || 1);
+  const kichThuoc = Math.min(50, Math.max(1, Number(thamSo?.kichThuoc) || 15));
+  const offset = (trang - 1) * kichThuoc;
+  const tuKhoa = (thamSo?.tuKhoa ?? '').trim();
+  const mauTim = tuKhoa ? `%${tuKhoa}%` : null;
+
+  const trangThai =
+    thamSo?.trangThai &&
+    ['moi', 'dang_lien_he', 'da_hen_lich', 'hoan_thanh', 'huy'].includes(thamSo.trangThai)
+      ? thamSo.trangThai
+      : null;
+
+  const nguon =
+    thamSo?.nguon && ['form_trang_chu', 'form_qr_uu_dai', 'khac'].includes(thamSo.nguon)
+      ? thamSo.nguon
+      : null;
+
+  const rows = await sql`
+    SELECT *
+    FROM yeu_cau_tu_van
+    WHERE
+      (${trangThai}::text IS NULL OR trang_thai = ${trangThai})
+      AND (${nguon}::text IS NULL OR nguon = ${nguon})
+      AND (
+        ${mauTim}::text IS NULL
+        OR ho_ten ILIKE ${mauTim}
+        OR so_dien_thoai ILIKE ${mauTim}
+        OR email ILIKE ${mauTim}
+        OR dich_vu ILIKE ${mauTim}
+        OR dien_tich ILIKE ${mauTim}
+        OR loi_nhan ILIKE ${mauTim}
+      )
+    ORDER BY
+      CASE WHEN trang_thai = 'moi' THEN 0 ELSE 1 END ASC,
+      ngay_tao DESC,
+      id DESC
+    LIMIT ${kichThuoc}
+    OFFSET ${offset}
+  `;
+
+  const [dem] = await sql`
+    SELECT COUNT(*)::int AS tong
+    FROM yeu_cau_tu_van
+    WHERE
+      (${trangThai}::text IS NULL OR trang_thai = ${trangThai})
+      AND (${nguon}::text IS NULL OR nguon = ${nguon})
+      AND (
+        ${mauTim}::text IS NULL
+        OR ho_ten ILIKE ${mauTim}
+        OR so_dien_thoai ILIKE ${mauTim}
+        OR email ILIKE ${mauTim}
+        OR dich_vu ILIKE ${mauTim}
+        OR dien_tich ILIKE ${mauTim}
+        OR loi_nhan ILIKE ${mauTim}
+      )
+  `;
+
+  const thongKe = await layThongKeYeuCauTuVanAdmin();
+
+  return {
+    items: rows.map(mapYeuCauTuVan),
+    tong: Number(dem?.tong ?? 0),
+    trang,
+    kichThuoc,
+    thongKe,
+  };
+}
+
+export async function capNhatYeuCauTuVanAdmin(
+  id: number,
+  dauVao: {
+    trangThai?: TrangThaiYeuCauTuVan;
+    ghiChuNoiBo?: string;
+    nguoiPhuTrach?: string;
+  },
+  tacNhan?: ThongTinPhienAdmin | null,
+): Promise<YeuCauTuVanDto> {
+  await damBaoBangYeuCauTuVan();
+
+  const [hienTai] = await sql`SELECT * FROM yeu_cau_tu_van WHERE id = ${id} LIMIT 1`;
+  if (!hienTai) {
+    throw new LoiNghiepVu('Không tìm thấy yêu cầu tư vấn.', 404);
+  }
+
+  const trangThaiMoi: TrangThaiYeuCauTuVan =
+    dauVao.trangThai &&
+    ['moi', 'dang_lien_he', 'da_hen_lich', 'hoan_thanh', 'huy'].includes(dauVao.trangThai)
+      ? dauVao.trangThai
+      : (hienTai.trang_thai as TrangThaiYeuCauTuVan);
+
+  const ghiChuNoiBo =
+    dauVao.ghiChuNoiBo !== undefined
+      ? dauVao.ghiChuNoiBo.trim().slice(0, 2000)
+      : String(hienTai.ghi_chu_noi_bo ?? '');
+
+  const nguoiPhuTrach =
+    dauVao.nguoiPhuTrach !== undefined
+      ? dauVao.nguoiPhuTrach.trim().slice(0, 120)
+      : String(hienTai.nguoi_phu_trach ?? '');
+
+  const [capNhat] = await sql`
+    UPDATE yeu_cau_tu_van
+    SET trang_thai = ${trangThaiMoi},
+        ghi_chu_noi_bo = ${ghiChuNoiBo},
+        nguoi_phu_trach = ${nguoiPhuTrach},
+        ngay_cap_nhat = now()
+    WHERE id = ${id}
+    RETURNING *
+  `;
+
+  const dto = mapYeuCauTuVan(capNhat);
+  await ghiNhatKy(
+    'yeu_cau_tu_van.cap_nhat',
+    id,
+    {
+      hoTen: dto.hoTen,
+      soDienThoai: dto.soDienThoai,
+      trangThai: dto.trangThai,
+      nguoiPhuTrach: dto.nguoiPhuTrach,
+    },
+    tacNhan,
+  );
+
+  return dto;
+}
+
+export async function xoaYeuCauTuVanAdmin(
+  id: number,
+  tacNhan?: ThongTinPhienAdmin | null,
+): Promise<void> {
+  await damBaoBangYeuCauTuVan();
+
+  const [hienTai] = await sql`SELECT * FROM yeu_cau_tu_van WHERE id = ${id} LIMIT 1`;
+  if (!hienTai) {
+    throw new LoiNghiepVu('Không tìm thấy yêu cầu tư vấn.', 404);
+  }
+
+  await sql`DELETE FROM yeu_cau_tu_van WHERE id = ${id}`;
+  await ghiNhatKy(
+    'yeu_cau_tu_van.xoa',
+    id,
+    {
+      hoTen: String(hienTai.ho_ten ?? ''),
+      soDienThoai: String(hienTai.so_dien_thoai ?? ''),
+    },
+    tacNhan,
+  );
+}
+

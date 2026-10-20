@@ -52,18 +52,50 @@ export default function ContactForm() {
     }
     setLoading(true);
     try {
-      const res = await fetch(form.action, {
+      const formData = new FormData(form);
+      const payload = {
+        hoTen: String(formData.get('name') ?? '').trim(),
+        soDienThoai: String(formData.get('phone') ?? '').trim(),
+        dichVu: String(formData.get('service') ?? '').trim(),
+        dienTich: String(formData.get('area') ?? '').trim(),
+        loiNhan: String(formData.get('message') ?? '').trim(),
+        nguon: 'form_trang_chu',
+        _gotcha: String(formData.get('_gotcha') ?? ''),
+      };
+
+      const res = await fetch('/api/v1/storefront/consultations', {
         method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
-      if (res.ok) { setSuccess(true); }
-      else {
+
+      // Gửi phụ không chặn luồng sang Formspree nếu cấu hình email ngoài
+      fetch('https://formspree.io/f/mdavqbdv', {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      }).catch(() => {});
+
+      if (res.ok) {
+        setSuccess(true);
+        form.reset();
+      } else {
         const data = await res.json().catch(() => ({}));
-        throw new Error((data as { error?: string }).error || `Lỗi ${res.status}`);
+        throw new Error(
+          (data as { message?: string; error?: string }).message ||
+            (data as { error?: string }).error ||
+            `Lỗi ${res.status}`,
+        );
       }
     } catch (err) {
-      showToast(`Không thể gửi. Vui lòng thử lại hoặc gọi trực tiếp 0901 234 567`);
+      const msg =
+        err instanceof Error && err.message
+          ? err.message
+          : 'Không thể gửi. Vui lòng thử lại hoặc gọi trực tiếp 0901 234 567';
+      showToast(msg);
     } finally {
       setLoading(false);
     }
@@ -116,15 +148,25 @@ export default function ContactForm() {
             <div className="cf-success">
               <div className="cf-success-icon">✓</div>
               <h3>Gửi thành công!</h3>
-              <p>Team Nếp Hiên sẽ gọi lại cho bạn trong vòng <strong>24 giờ</strong>.</p>
-              <a href="#home" className="btn btn-gold" style={{ marginTop: 28, display: 'inline-flex' }}>
-                Về trang chủ
-              </a>
+              <p>Team Nếp Hiên đã nhận được yêu cầu và sẽ gọi lại cho bạn trong vòng <strong>24 giờ</strong>.</p>
+              <div style={{ marginTop: 28, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => setSuccess(false)}
+                  className="btn btn-gold"
+                  style={{ display: 'inline-flex' }}
+                >
+                  Gửi yêu cầu khác
+                </button>
+                <a href="#home" className="btn" style={{ display: 'inline-flex', border: '1px solid rgba(255,255,255,0.25)', color: 'var(--cream)' }}>
+                  Về đầu trang
+                </a>
+              </div>
             </div>
           ) : (
             <form
               ref={formRef}
-              action="https://formspree.io/f/mdavqbdv"
+              action="/api/v1/storefront/consultations"
               method="POST"
               noValidate
               onSubmit={handleSubmit}

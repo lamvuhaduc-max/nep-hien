@@ -13,6 +13,7 @@ import {
 } from '@/lib/content/bai-viet-service';
 import { TabDanhMuc } from './_TabDanhMuc';
 import { TabTaiKhoan } from './_TabTaiKhoan';
+import { TabTuVan } from './_TabTuVan';
 import { AdminSidebar, TabQuanTri } from './_AdminSidebar';
 import { docNhapCucBo, khoaNhapCucBo, xoaNhapCucBo } from './_nhap-cuc-bo';
 
@@ -40,6 +41,9 @@ const NHAN_HANH_DONG: Record<string, { nhan: string; mau: string; nen: string }>
   'danh_muc_bai_viet.tao': { nhan: 'Thêm danh mục', mau: '#137333', nen: '#e6f4ea' },
   'danh_muc_bai_viet.sua': { nhan: 'Cập nhật danh mục', mau: '#1a0dab', nen: '#e8f0fe' },
   'danh_muc_bai_viet.xoa': { nhan: 'Xóa danh mục', mau: '#c5221f', nen: '#fce8e6' },
+  'yeu_cau_tu_van.tiep_nhan': { nhan: 'Tiếp nhận yêu cầu tư vấn', mau: '#b33c14', nen: '#fdebe4' },
+  'yeu_cau_tu_van.cap_nhat': { nhan: 'Cập nhật hồ sơ tư vấn', mau: '#1a0dab', nen: '#e8f0fe' },
+  'yeu_cau_tu_van.xoa': { nhan: 'Xóa yêu cầu tư vấn', mau: '#c5221f', nen: '#fce8e6' },
   'tai_khoan.tao': { nhan: 'Tạo tài khoản quản trị', mau: '#137333', nen: '#e6f4ea' },
   'tai_khoan.sua': { nhan: 'Sửa thông tin tài khoản', mau: '#1a0dab', nen: '#e8f0fe' },
   'tai_khoan.doi_vai_tro': { nhan: 'Thay đổi vai trò (Role)', mau: '#b06000', nen: '#fef7e0' },
@@ -67,6 +71,7 @@ export function QuanLyBaiViet() {
 
   const [danhSach, setDanhSach] = useState<TomTatBaiVietDto[]>([]);
   const [danhMuc, setDanhMuc] = useState<DanhMucBaiVietDto[]>([]);
+  const [soTuVan, setSoTuVan] = useState<number>(0);
   const [taiKhoanList, setTaiKhoanList] = useState<TaiKhoanQuanTriDto[]>([]);
   const [nhatKy, setNhatKy] = useState<NhatKyBaiVietDto[]>([]);
   const [nhomNhatKy, setNhomNhatKy] = useState<string>('');
@@ -102,6 +107,20 @@ export function QuanLyBaiViet() {
       if (res.ok) {
         const data = await res.json();
         setDanhMuc(Array.isArray(data) ? data : []);
+      }
+    } catch {
+      // Bỏ qua
+    }
+  }, []);
+
+  const taiThongKeTuVan = useCallback(async () => {
+    try {
+      const res = await fetch('/api/v1/admin/consultations?kichThuoc=1', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.thongKe && typeof data.thongKe.tatCa === 'number') {
+          setSoTuVan(data.thongKe.tatCa);
+        }
       }
     } catch {
       // Bỏ qua
@@ -203,14 +222,21 @@ export function QuanLyBaiViet() {
     if (typeof window !== 'undefined') {
       const sp = new URLSearchParams(window.location.search);
       const t = sp.get('tab');
-      if (t === 'bai_viet' || t === 'danh_muc' || t === 'tai_khoan' || t === 'nhat_ky') {
+      if (
+        t === 'bai_viet' ||
+        t === 'danh_muc' ||
+        t === 'tu_van' ||
+        t === 'tai_khoan' ||
+        t === 'nhat_ky'
+      ) {
         setTabChinh(t);
       }
     }
     taiPhienHienTai();
     taiDanhMuc();
+    taiThongKeTuVan();
     taiTaiKhoan();
-  }, [taiPhienHienTai, taiDanhMuc, taiTaiKhoan]);
+  }, [taiPhienHienTai, taiDanhMuc, taiThongKeTuVan, taiTaiKhoan]);
 
   useEffect(() => {
     taiBaiViet();
@@ -291,13 +317,17 @@ export function QuanLyBaiViet() {
       tieuDe: 'Quản lý Danh mục Bài viết',
       moTa: 'Tổ chức các chuyên mục nội dung, đường dẫn tĩnh (slug) và thứ tự hiển thị ngoài trang công khai.',
     },
+    tu_van: {
+      tieuDe: 'Yêu cầu Tư vấn Khách hàng',
+      moTa: 'Tiếp nhận, phân công Kiến trúc sư và theo dõi tiến độ tư vấn từ Form Trang chủ (#contact-form) và QR Ưu đãi (/uu-dai).',
+    },
     tai_khoan: {
       tieuDe: 'Quản trị Tài khoản & Phân quyền',
       moTa: 'Quản lý tài khoản đăng nhập hệ thống với 2 cấp quyền: Super Admin (toàn quyền) và Admin (biên tập).',
     },
     nhat_ky: {
       tieuDe: 'Nhật ký Hoạt động Hệ thống',
-      moTa: 'Kiểm toán tự động mọi thao tác bài viết, danh mục, quản trị tài khoản và lịch sử đăng nhập.',
+      moTa: 'Kiểm toán tự động mọi thao tác bài viết, danh mục, yêu cầu tư vấn, quản trị tài khoản và lịch sử đăng nhập.',
     },
   };
 
@@ -315,6 +345,7 @@ export function QuanLyBaiViet() {
         nguoiDung={nguoiDungHienTai}
         soBaiViet={thongKe.tatCa}
         soDanhMuc={danhMuc.length}
+        soTuVan={soTuVan}
         soTaiKhoan={taiKhoanList.length}
       />
 
@@ -380,6 +411,12 @@ export function QuanLyBaiViet() {
               taiBaiViet();
             }}
           />
+        ) : tabChinh === 'tu_van' ? (
+          <TabTuVan
+            onCapNhatThongKe={(tk) => {
+              setSoTuVan(tk.tatCa);
+            }}
+          />
         ) : tabChinh === 'tai_khoan' ? (
           <TabTaiKhoan
             taiKhoanList={taiKhoanList}
@@ -412,7 +449,7 @@ export function QuanLyBaiViet() {
                   Nhật ký hoạt động toàn hệ thống ({nhatKy.length})
                 </h3>
                 <p style={{ fontSize: '0.8rem', color: '#6b5e52', margin: 0 }}>
-                  Ghi nhận tự động mọi thao tác bài viết, danh mục, quản trị tài khoản và đăng nhập.
+                  Ghi nhận tự động mọi thao tác bài viết, danh mục, yêu cầu tư vấn, quản trị tài khoản và đăng nhập.
                 </p>
               </div>
 
@@ -427,6 +464,7 @@ export function QuanLyBaiViet() {
                   <option value="">Tất cả phân hệ</option>
                   <option value="bai_viet">Bài viết</option>
                   <option value="danh_muc_bai_viet">Danh mục</option>
+                  <option value="yeu_cau_tu_van">Yêu cầu tư vấn</option>
                   <option value="tai_khoan">Tài khoản &amp; Phân quyền</option>
                   <option value="he_thong">Đăng nhập / Đăng xuất</option>
                 </select>

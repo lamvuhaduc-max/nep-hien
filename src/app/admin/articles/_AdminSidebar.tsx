@@ -10,12 +10,13 @@ import {
   History,
   LogOut,
   type LucideIcon,
+  MessageSquareText,
   ShieldCheck,
   Users,
 } from 'lucide-react';
 import { ThongTinPhienAdmin } from '@/lib/auth-admin';
 
-export type TabQuanTri = 'bai_viet' | 'danh_muc' | 'tai_khoan' | 'nhat_ky';
+export type TabQuanTri = 'bai_viet' | 'danh_muc' | 'tu_van' | 'tai_khoan' | 'nhat_ky';
 
 interface AdminSidebarProps {
   /** Tab hiện tại nếu đang ở trang /admin/articles, hoặc 'soan_thao' nếu đang ở trang tạo/sửa bài */
@@ -25,6 +26,7 @@ interface AdminSidebarProps {
   nguoiDung?: ThongTinPhienAdmin | null;
   soBaiViet?: number;
   soDanhMuc?: number;
+  soTuVan?: number;
   soTaiKhoan?: number;
 }
 
@@ -34,6 +36,7 @@ export function AdminSidebar({
   nguoiDung,
   soBaiViet,
   soDanhMuc,
+  soTuVan,
   soTaiKhoan,
 }: AdminSidebarProps) {
   async function xuLyDangXuat() {
@@ -113,6 +116,7 @@ export function AdminSidebar({
           <div className="nh-sidebar-section-label">Quản lý nội dung</div>
           {renderMucMenu('bai_viet', 'Danh sách bài viết', FileText, soBaiViet)}
           {renderMucMenu('danh_muc', 'Quản lý danh mục', FolderKanban, soDanhMuc)}
+          {renderMucMenu('tu_van', 'Yêu cầu tư vấn', MessageSquareText, soTuVan)}
 
           <div className="nh-sidebar-section-label" style={{ marginTop: '1.15rem' }}>
             Hệ thống &amp; Bảo mật

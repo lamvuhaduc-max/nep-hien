@@ -27,15 +27,47 @@ export default function UuDaiPage() {
 
     setLoading(true);
     try {
-      const res = await fetch('https://formspree.io/f/mdavqbdv', {
+      const payload = {
+        hoTen: String(data.get('owner_name') ?? '').trim(),
+        soDienThoai: String(data.get('phone') ?? '').trim(),
+        email: String(data.get('email') ?? '').trim(),
+        dichVu: String(data.get('nhu_cau') ?? '').trim(),
+        dienTich: String(data.get('ma_can') ?? '').trim(),
+        loiNhan: String(data.get('note') ?? '').trim(),
+        nguon: 'form_qr_uu_dai',
+        maUuDai: 'NEPHIEN-QR-2026',
+        _gotcha: String(data.get('_gotcha') ?? ''),
+      };
+
+      const res = await fetch('/api/v1/storefront/consultations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      fetch('https://formspree.io/f/mdavqbdv', {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' },
+      }).catch(() => {});
+
+      if (res.ok) {
+        setSuccess(true);
+        form.reset();
+      } else {
+        const bodyErr = await res.json().catch(() => ({}));
+        throw new Error((bodyErr as { message?: string }).message || 'Lỗi gửi thông tin');
+      }
+    } catch (err) {
+      setErrors({
+        submit:
+          err instanceof Error && err.message
+            ? err.message
+            : 'Có lỗi xảy ra. Vui lòng thử lại hoặc gọi 0901 234 567',
       });
-      if (res.ok) setSuccess(true);
-      else throw new Error();
-    } catch {
-      setErrors({ submit: 'Có lỗi xảy ra. Vui lòng thử lại hoặc gọi 0901 234 567' });
     } finally {
       setLoading(false);
     }

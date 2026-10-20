@@ -10,8 +10,26 @@ export default function Footer() {
 
         {/* Col 1 — Brand */}
         <div className="footer-brand-col">
-          <Image src="/logo-light.svg" alt="Nếp Hiên" width={200} height={58}
-            style={{ height: '48px', width: 'auto', marginBottom: 20 }} />
+          <Link
+            href="/"
+            aria-label="Nếp Hiên – Trang chủ"
+            style={{ display: 'inline-flex', alignSelf: 'flex-start', marginBottom: 20 }}
+          >
+            <Image
+              src="/logo-light.svg"
+              alt="Nếp Hiên"
+              width={168}
+              height={48}
+              unoptimized
+              style={{
+                height: '48px',
+                width: 'auto',
+                objectFit: 'contain',
+                objectPosition: 'left center',
+                marginLeft: '-2px',
+              }}
+            />
+          </Link>
           <p className="footer-tagline">
             Kiến tạo không gian sống vừa đẹp vừa sống —
             nơi thẩm mỹ và công năng hoà quyện.
@@ -31,8 +49,9 @@ export default function Footer() {
               <li><Link href="/gioi-thieu">Giới Thiệu</Link></li>
               <li><Link href="/du-an">Dự Án</Link></li>
               <li><Link href="/phong-cach">Phong Cách</Link></li>
+              <li><Link href="/bai-viet">Bài Viết &amp; Cẩm Nang</Link></li>
               <li><Link href="/bao-gia">Báo Giá</Link></li>
-              <li><Link href="/#services">Dịch Vụ</Link></li>
+              <li><Link href="/admin/articles">Quản Trị Bài Viết</Link></li>
             </ul>
           </nav>
         </div>

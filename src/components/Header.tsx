@@ -33,7 +33,16 @@ const NAV_LEFT: NavItem[] = [
 const NAV_RIGHT: NavItem[] = [
   { label: 'Phong Cách', href: '/phong-cach' },
   { label: 'Báo Giá',    href: '/bao-gia'    },
-  { label: 'Cẩm Nang',  href: '/#about'     },
+  {
+    label: 'Bài Viết',
+    href: '/bai-viet',
+    dropdown: [
+      { label: 'Triết lý Không gian', href: '/bai-viet?danhMuc=triet-ly-khong-gian' },
+      { label: 'Cẩm nang Nội thất',   href: '/bai-viet?danhMuc=cam-nang-noi-that' },
+      { label: 'Vật liệu & Xúc giác', href: '/bai-viet?danhMuc=vat-lieu-va-xuc-giac' },
+      { label: 'Quản trị Bài viết',   href: '/admin/articles' },
+    ],
+  },
   { label: 'Liên Hệ',   href: '/#contact-form' },
 ];
 
@@ -159,6 +168,7 @@ export default function Header({ isDark = false }: { isDark?: boolean }) {
               height={52}
               className="logo-img"
               priority
+              unoptimized
             />
           </Link>
 
